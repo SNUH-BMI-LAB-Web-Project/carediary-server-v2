@@ -2,8 +2,8 @@ package kr.io.snuhbmilab.carediaryserverv2.common
 
 import org.springframework.http.HttpStatus
 
-val SUCCESS_MESSAGE = "요청에 성공했습니다."
-val SUCCESS_CODE = "SUCCESS"
+const val SUCCESS_MESSAGE = "요청에 성공했습니다."
+const val SUCCESS_CODE = "SUCCESS"
 
 enum class SuccessCode(
     val httpStatus: HttpStatus,
