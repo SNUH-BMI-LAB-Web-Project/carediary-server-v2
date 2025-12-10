@@ -11,6 +11,7 @@ import jakarta.persistence.Table
 import kr.io.snuhbmilab.carediaryserverv2.common.constants.PROVIDER_ID_PATTERN
 import kr.io.snuhbmilab.carediaryserverv2.common.constants.Role
 import kr.io.snuhbmilab.carediaryserverv2.common.entity.BaseTimeEntity
+import java.time.LocalDate
 import java.util.UUID
 
 @Entity
@@ -33,6 +34,18 @@ class User(
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
     val role: Role,
+
+    @Enumerated(EnumType.STRING)
+    @Column
+    var gender: Gender? = null,
+
+    @Column(name = "birth_date")
+    var birthDate: LocalDate? = null,
+
+    var address: String? = null,
+
+    @Column(name = "primay_diagnosis")
+    val primaryDiagnosis: String? = null,
 ) : BaseTimeEntity() {
 
     @JvmInline
