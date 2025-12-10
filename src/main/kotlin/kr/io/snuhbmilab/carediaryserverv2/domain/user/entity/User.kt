@@ -25,7 +25,7 @@ class User(
     val email: String,
 
     @Column
-    val nickname: String,
+    val name: String? = null,
 
     @Column(name = "social_provider_id", nullable = false)
     val socialProviderId: SocialProviderId,
@@ -46,5 +46,9 @@ class User(
 
         val socialId: String
             get() = value.split("-")[1]
+    }
+
+    enum class Gender {
+        MALE, FEMALE
     }
 }

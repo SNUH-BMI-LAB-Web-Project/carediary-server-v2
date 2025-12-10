@@ -36,7 +36,7 @@ class JwtProvider(
             Date(now.time + expiredAt.toMillis()),
             user.email,
             mapOf(
-                Pair("nickname", user.nickname),
+                Pair("name", user.name),
                 Pair("role", user.role.name),
             )
         )
