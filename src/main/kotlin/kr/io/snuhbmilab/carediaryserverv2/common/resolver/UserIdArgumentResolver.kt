@@ -1,0 +1,30 @@
+package kr.io.snuhbmilab.carediaryserverv2.common.resolver
+
+import kr.io.snuhbmilab.carediaryserverv2.common.annotation.UserId
+import org.springframework.core.MethodParameter
+import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.stereotype.Component
+import org.springframework.web.bind.support.WebDataBinderFactory
+import org.springframework.web.context.request.NativeWebRequest
+import org.springframework.web.method.support.HandlerMethodArgumentResolver
+import org.springframework.web.method.support.ModelAndViewContainer
+import java.util.UUID
+
+@Component
+class UserIdArgumentResolver : HandlerMethodArgumentResolver {
+
+    override fun supportsParameter(parameter: MethodParameter): Boolean {
+        val hasAnnotation = parameter.hasParameterAnnotation(UserId::class.java)
+        val isUUID = parameter.parameterType == UUID::class.java
+        return hasAnnotation && isUUID
+    }
+
+    override fun resolveArgument(
+        parameter: MethodParameter,
+        mavContainer: ModelAndViewContainer?,
+        webRequest: NativeWebRequest,
+        binderFactory: WebDataBinderFactory?
+    ): Any? {
+        return SecurityContextHolder.getContext().authentication?.principal
+    }
+}
