@@ -12,11 +12,11 @@ import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
 
 @Entity
-@Table(name = "initial_interview_user_answers")
-class InitialInterviewUserAnswer(
+@Table(name = "scale_question_user_answers")
+class ScaleQuestionUserAnswer(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "iiua_id", nullable = false)
+    @Column(name = "squa_id", nullable = false)
     val id: Long? = null,
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -24,8 +24,8 @@ class InitialInterviewUserAnswer(
     val user: User,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "iiq_id", nullable = false)
-    val question: InitialInterviewQuestion,
+    @JoinColumn(name = "scale_question_id", nullable = false)
+    val question: ScaleQuestion,
 
     @Lob
     @Column(name = "user_answer", columnDefinition = "TEXT")

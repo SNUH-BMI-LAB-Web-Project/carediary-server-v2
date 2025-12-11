@@ -9,11 +9,11 @@ import jakarta.persistence.Lob
 import jakarta.persistence.Table
 
 @Entity
-@Table(name = "initial_interview_questions")
-class InitialInterviewQuestion(
+@Table(name = "scale_questions")
+class ScaleQuestion(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "iiq_id", nullable = false)
+    @Column(name = "scale_question_id", nullable = false)
     val id: Long? = null,
 
     @Lob
