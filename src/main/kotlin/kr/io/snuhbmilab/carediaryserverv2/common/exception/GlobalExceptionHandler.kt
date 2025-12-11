@@ -1,6 +1,8 @@
 package kr.io.snuhbmilab.carediaryserverv2.common.exception
 
+import kr.io.snuhbmilab.carediaryserverv2.common.GlobalErrorCode
 import kr.io.snuhbmilab.carediaryserverv2.common.dto.CommonResponse
+import org.springframework.security.access.AccessDeniedException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
 
@@ -15,4 +17,8 @@ class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception::class)
     fun handleException(exception: Exception): CommonResponse<Unit> = CommonResponse.error(exception)
+
+    @ExceptionHandler(AccessDeniedException::class)
+    fun handleAccessDeniedException(exception: AccessDeniedException): CommonResponse<Unit> =
+        CommonResponse.error(GlobalErrorCode.FORBIDDEN)
 }

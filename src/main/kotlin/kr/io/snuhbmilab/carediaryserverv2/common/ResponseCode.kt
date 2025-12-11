@@ -24,4 +24,5 @@ enum class GlobalErrorCode(
     override val message: String,
 ) : ErrorCode {
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "응답 처리 중, 예외가 발생했습니다."),
+    FORBIDDEN(HttpStatus.FORBIDDEN, "요청 권한이 없습니다."),
 }
