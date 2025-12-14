@@ -42,7 +42,7 @@ class JwtProvider(
         )
     }
 
-    private fun makeToken(expiry: Date, subject: String, claims: Map<String, Any>): String {
+    private fun makeToken(expiry: Date, subject: String, claims: Map<String, Any?>): String {
         val now = Date()
         val jwtBuilder = Jwts.builder()
             .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
