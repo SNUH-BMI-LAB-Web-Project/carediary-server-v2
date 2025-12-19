@@ -7,6 +7,7 @@ import kr.io.snuhbmilab.carediaryserverv2.domain.user.dto.response.CurrentUserRe
 import kr.io.snuhbmilab.carediaryserverv2.domain.user.facade.UserFacade
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
@@ -18,7 +19,7 @@ class UserController(
 ) {
 
     @PostMapping("/register")
-    fun register(@UserId userId: UUID, request: UserRegisterRequest): CommonResponse<Unit> {
+    fun register(@UserId userId: UUID, @RequestBody request: UserRegisterRequest): CommonResponse<Unit> {
         userFacade.register(userId, request)
         return CommonResponse.ok()
     }
