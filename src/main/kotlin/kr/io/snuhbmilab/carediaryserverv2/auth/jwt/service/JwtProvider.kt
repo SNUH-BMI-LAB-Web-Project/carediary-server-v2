@@ -34,7 +34,7 @@ class JwtProvider(
         val now = Date()
         return makeToken(
             Date(now.time + expiredAt.toMillis()),
-            user.email,
+            user.id.toString(),
             mapOf(
                 Pair("name", user.name),
                 Pair("role", user.role.name),

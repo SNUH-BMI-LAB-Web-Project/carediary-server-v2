@@ -8,4 +8,5 @@ enum class UserErrorCode(
     override val message: String,
 ) : ErrorCode {
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 사용자 정보입니다."),
+    USER_INFORMATION_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 사용자 부가 정보입니다.")
 }

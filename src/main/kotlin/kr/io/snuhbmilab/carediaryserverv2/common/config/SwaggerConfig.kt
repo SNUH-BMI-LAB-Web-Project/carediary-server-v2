@@ -18,7 +18,7 @@ class SwaggerConfig(
     private var productionUrl: String = "",
 ) {
     @Bean
-    fun openAPI(): OpenAPI? {
+    fun openAPI(): OpenAPI {
         val securityRequirement = SecurityRequirement().addList("JWT")
         val components = Components().addSecuritySchemes(
             "JWT", SecurityScheme()

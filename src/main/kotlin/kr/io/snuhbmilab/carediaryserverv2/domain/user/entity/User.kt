@@ -26,14 +26,14 @@ class User(
     val email: String,
 
     @Column
-    val name: String? = null,
+    var name: String? = null,
 
     @Column(name = "social_provider_id", nullable = false)
     val socialProviderId: SocialProviderId,
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
-    val role: Role,
+    var role: Role,
 
     @Enumerated(EnumType.STRING)
     @Column
@@ -45,8 +45,26 @@ class User(
     var address: String? = null,
 
     @Column(name = "primay_diagnosis")
-    val primaryDiagnosis: String? = null,
+    var primaryDiagnosis: String? = null,
 ) : BaseTimeEntity() {
+
+    fun register(
+        name: String,
+        role: Role,
+        gender: Gender,
+        birthDate: LocalDate,
+        address: String,
+        primaryDiagnosis: String?
+    ) {
+        this.name = name
+        this.role = role
+        this.gender = gender
+        this.birthDate = birthDate
+        this.address = address
+        this.primaryDiagnosis = primaryDiagnosis
+    }
+
+    fun isAdmin(): Boolean = role == Role.ADMIN
 
     @JvmInline
     value class SocialProviderId(val value: String) {
