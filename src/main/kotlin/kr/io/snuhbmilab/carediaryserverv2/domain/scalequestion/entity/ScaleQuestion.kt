@@ -16,6 +16,9 @@ class ScaleQuestion(
     @Column(name = "scale_question_id", nullable = false)
     val id: Long? = null,
 
+    @Column(name = "question_no", nullable = false)
+    val questionNumber: Int,
+
     @Lob
     @Column(name = "content", nullable = false, columnDefinition = "TEXT")
     val content: String,
