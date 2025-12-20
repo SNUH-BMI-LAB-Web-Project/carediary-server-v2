@@ -12,7 +12,7 @@ data class ScaleQuestionUserAnswerRegisterRequest(
     data class ScaleQuestionUserAnswerItem(
         val scaleQuestionId: Long,
 
-        @field:Range(min = 1, max = 4, message = "응답 값은 1 이상 4 이하여야 합니다")
+        @field:Range(min = 1, max = 5, message = "응답 값은 1 이상 5 이하여야 합니다")
         val answer: Int
     )
 }
