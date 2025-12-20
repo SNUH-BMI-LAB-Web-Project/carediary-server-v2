@@ -27,7 +27,7 @@ class ScaleQuestionUserAnswer(
     @Column(name = "scale_question_id", nullable = false)
     val scaleQuestionId: Long,
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "scale_question_id", updatable = false, insertable = false)
     var question: ScaleQuestion? = null,
 
