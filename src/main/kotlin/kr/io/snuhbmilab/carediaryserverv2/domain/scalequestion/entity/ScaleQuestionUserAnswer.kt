@@ -10,10 +10,19 @@ import jakarta.persistence.JoinColumn
 import jakarta.persistence.Lob
 import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
+import jakarta.persistence.UniqueConstraint
 import kr.io.snuhbmilab.carediaryserverv2.domain.user.entity.User
 
 @Entity
-@Table(name = "scale_question_user_answers")
+@Table(
+    name = "scale_question_user_answers",
+    uniqueConstraints = [
+        UniqueConstraint(
+            name = "uk_user_scale_question_term",
+            columnNames = ["user_id", "scale_question_id", "term_count"]
+        )
+    ]
+)
 class ScaleQuestionUserAnswer(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
