@@ -43,7 +43,6 @@ class ScaleQuestionUserAnswer(
     @Column(name = "term_count", nullable = false)
     val termCount: Int  = 0,
 
-    @Lob
-    @Column(name = "user_answer", columnDefinition = "TEXT", nullable = false)
+    @Column(name = "user_answer", nullable = false)
     val userAnswer: Int,
 )
