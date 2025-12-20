@@ -1,4 +1,4 @@
-package kr.io.snuhbmilab.carediaryserverv2.domain.user.entity
+package kr.io.snuhbmilab.carediaryserverv2.domain.scalequestion.entity
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
@@ -15,6 +15,9 @@ class ScaleQuestion(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "scale_question_id", nullable = false)
     val id: Long? = null,
+
+    @Column(name = "question_no", nullable = false)
+    val questionNumber: Int,
 
     @Lob
     @Column(name = "content", nullable = false, columnDefinition = "TEXT")
