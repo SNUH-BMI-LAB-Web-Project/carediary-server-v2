@@ -69,7 +69,9 @@ class User(
 
     fun isAdmin(): Boolean = role == Role.ADMIN
 
-    fun addScaleQuestionTermCount() = scaleQuestionTermCount++
+    fun addScaleQuestionTermCount() {
+        scaleQuestionTermCount++
+    }
 
     @JvmInline
     value class SocialProviderId(val value: String) {
