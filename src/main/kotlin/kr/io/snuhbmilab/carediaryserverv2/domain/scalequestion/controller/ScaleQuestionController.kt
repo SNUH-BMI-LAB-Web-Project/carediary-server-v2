@@ -17,6 +17,13 @@ class ScaleQuestionController(
     private val scaleQuestionFacade: ScaleQuestionFacade
 ) {
 
+    /**
+     * Registers the authenticated user's answers to scale questions.
+     *
+     * @param userId UUID of the authenticated user whose answers are being registered.
+     * @param request Payload containing the user's answers to the scale questions.
+     * @return A success response with no body.
+     */
     @PostMapping("/v1/users/scale-questions")
     fun registerUserScaleQuestionResult(
         @UserId userId: UUID,
@@ -26,6 +33,11 @@ class ScaleQuestionController(
         return CommonResponse.ok()
     }
 
+    /**
+     * Retrieves all available scale questions.
+     *
+     * @return A CommonResponse wrapping a ScaleQuestionFindAllResponse containing all scale question data.
+     */
     @AuthenticationRequired
     @GetMapping("/v1/scale-questions")
     fun findAllScaleQuestions(): CommonResponse<ScaleQuestionFindAllResponse> {

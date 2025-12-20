@@ -4,5 +4,10 @@ import kr.io.snuhbmilab.carediaryserverv2.domain.scalequestion.entity.ScaleQuest
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface ScaleQuestionRepository : JpaRepository<ScaleQuestion, Long> {
-    fun findAllByOrderByQuestionNumberAsc(): List<ScaleQuestion>
+    /**
+ * Retrieve all scale questions ordered by their questionNumber in ascending order.
+ *
+ * @return A list of ScaleQuestion entities sorted by `questionNumber` ascending.
+ */
+fun findAllByOrderByQuestionNumberAsc(): List<ScaleQuestion>
 }

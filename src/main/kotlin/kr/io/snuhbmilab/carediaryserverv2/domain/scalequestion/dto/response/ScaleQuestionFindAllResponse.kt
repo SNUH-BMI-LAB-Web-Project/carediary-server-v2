@@ -11,6 +11,12 @@ data class ScaleQuestionFindAllResponse(
         val content: String
     ) {
         companion object {
+            /**
+             * Creates a ScaleQuestionDto from a ScaleQuestion entity.
+             *
+             * @param scaleQuestion The source entity to convert; its `id` must be non-null.
+             * @return A ScaleQuestionDto containing the entity's `id`, `questionNumber`, and `content`.
+             */
             @JvmStatic
             fun from(scaleQuestion: ScaleQuestion) = ScaleQuestionDto(
                 scaleQuestionId = scaleQuestion.id!!,
@@ -21,6 +27,12 @@ data class ScaleQuestionFindAllResponse(
     }
 
     companion object {
+        /**
+         * Create a ScaleQuestionFindAllResponse from a list of ScaleQuestion entities.
+         *
+         * @param scaleQuestions The list of ScaleQuestion entities to convert to DTOs.
+         * @return A ScaleQuestionFindAllResponse containing the converted ScaleQuestionDto list.
+         */
         @JvmStatic
         fun from(scaleQuestions: List<ScaleQuestion>) = ScaleQuestionFindAllResponse(
             scaleQuestions = scaleQuestions.map { ScaleQuestionDto.from(it) }
