@@ -1,4 +1,4 @@
-package kr.io.snuhbmilab.carediaryserverv2.domain.user.entity
+package kr.io.snuhbmilab.carediaryserverv2.domain.scalequestion.entity
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
@@ -10,6 +10,7 @@ import jakarta.persistence.JoinColumn
 import jakarta.persistence.Lob
 import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
+import kr.io.snuhbmilab.carediaryserverv2.domain.user.entity.User
 
 @Entity
 @Table(name = "scale_question_user_answers")
@@ -23,9 +24,12 @@ class ScaleQuestionUserAnswer(
     @JoinColumn(name = "user_id", nullable = false)
     val user: User,
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "scale_question_id", nullable = false)
-    val question: ScaleQuestion,
+    @Column(name = "scale_question_id", nullable = false)
+    val scaleQuestionId: Long,
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "scale_question_id", updatable = false, insertable = false)
+    var question: ScaleQuestion? = null,
 
     @Lob
     @Column(name = "user_answer", columnDefinition = "TEXT")

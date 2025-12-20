@@ -1,4 +1,4 @@
-package kr.io.snuhbmilab.carediaryserverv2.domain.user.entity
+package kr.io.snuhbmilab.carediaryserverv2.domain.scalequestion.entity
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
