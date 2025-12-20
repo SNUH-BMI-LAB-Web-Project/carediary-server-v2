@@ -31,6 +31,9 @@ class ScaleQuestionUserAnswer(
     @JoinColumn(name = "scale_question_id", updatable = false, insertable = false)
     var question: ScaleQuestion? = null,
 
+    @Column(name = "term_count", nullable = false)
+    val termCount: Int  = 0,
+
     @Lob
     @Column(name = "user_answer", columnDefinition = "TEXT")
     val userAnswer: String? = null,

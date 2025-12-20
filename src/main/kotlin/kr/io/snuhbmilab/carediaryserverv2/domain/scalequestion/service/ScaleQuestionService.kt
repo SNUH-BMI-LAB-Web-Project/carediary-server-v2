@@ -18,7 +18,8 @@ class ScaleQuestionService(
             ScaleQuestionUserAnswer(
                 user = user,
                 scaleQuestionId = scaleQuestionId,
-                userAnswer = userAnswer
+                userAnswer = userAnswer,
+                termCount = user.scaleQuestionTermCount
             )
         )
     }

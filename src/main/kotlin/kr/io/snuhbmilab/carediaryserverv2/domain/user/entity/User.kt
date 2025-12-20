@@ -46,6 +46,9 @@ class User(
 
     @Column(name = "primay_diagnosis")
     var primaryDiagnosis: String? = null,
+
+    @Column(name = "scale_question_term_count")
+    var scaleQuestionTermCount: Int = 0
 ) : BaseTimeEntity() {
 
     fun register(
@@ -65,6 +68,8 @@ class User(
     }
 
     fun isAdmin(): Boolean = role == Role.ADMIN
+
+    fun addScaleQuestionTermCount() = scaleQuestionTermCount++
 
     @JvmInline
     value class SocialProviderId(val value: String) {

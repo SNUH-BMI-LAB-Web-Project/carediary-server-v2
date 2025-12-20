@@ -21,6 +21,8 @@ class ScaleQuestionFacade(
         request.items.forEach {
             scaleQuestionService.appendUserAnswer(user, it.scaleQuestionId, it.answer.toString())
         }
+
+        user.addScaleQuestionTermCount()
     }
 
     fun findAllScaleQuestions(): ScaleQuestionFindAllResponse {
