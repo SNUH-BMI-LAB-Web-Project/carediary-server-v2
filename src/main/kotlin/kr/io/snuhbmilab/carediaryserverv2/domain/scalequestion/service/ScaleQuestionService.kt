@@ -13,7 +13,7 @@ class ScaleQuestionService(
 ) {
     fun findAll() = scaleQuestionRepository.findAllByOrderByQuestionNumberAsc()
 
-    fun appendUserAnswer(user: User, scaleQuestionId: Long, userAnswer: String) {
+    fun appendUserAnswer(user: User, scaleQuestionId: Long, userAnswer: Int) {
         scaleQuestionUserAnswerRepository.save(
             ScaleQuestionUserAnswer(
                 user = user,

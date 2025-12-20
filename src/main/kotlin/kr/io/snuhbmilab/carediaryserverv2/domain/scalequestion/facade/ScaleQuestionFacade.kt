@@ -19,7 +19,7 @@ class ScaleQuestionFacade(
         val user = userService.findById(userId)
 
         request.items.forEach {
-            scaleQuestionService.appendUserAnswer(user, it.scaleQuestionId, it.answer.toString())
+            scaleQuestionService.appendUserAnswer(user, it.scaleQuestionId, it.answer)
         }
 
         user.addScaleQuestionTermCount()

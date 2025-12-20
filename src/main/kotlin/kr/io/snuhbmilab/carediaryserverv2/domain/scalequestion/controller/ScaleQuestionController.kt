@@ -1,5 +1,6 @@
 package kr.io.snuhbmilab.carediaryserverv2.domain.scalequestion.controller
 
+import jakarta.validation.Valid
 import kr.io.snuhbmilab.carediaryserverv2.common.annotation.AuthenticationRequired
 import kr.io.snuhbmilab.carediaryserverv2.common.annotation.UserId
 import kr.io.snuhbmilab.carediaryserverv2.common.dto.CommonResponse
@@ -20,7 +21,7 @@ class ScaleQuestionController(
     @PostMapping("/v1/users/scale-questions")
     fun registerUserScaleQuestionResult(
         @UserId userId: UUID,
-        @RequestBody request: ScaleQuestionUserAnswerRegisterRequest
+        @Valid @RequestBody request: ScaleQuestionUserAnswerRegisterRequest
     ): CommonResponse<Unit> {
         scaleQuestionFacade.registerUserScaleQuestionResult(userId, request)
         return CommonResponse.ok()
