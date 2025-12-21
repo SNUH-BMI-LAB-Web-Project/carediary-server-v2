@@ -22,10 +22,13 @@ class DiaryRecommendedQuestionUserScore(
     @JoinColumn(name = "diary_id", nullable = false)
     val diary: Diary,
 
+    @Column(name = "drq_id", nullable = false)
+    val questionId: Long,
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "drq_id", nullable = false)
-    val question: DiaryRecommendedQuestion,
+    @JoinColumn(name = "drq_id", updatable = false, insertable = false)
+    var question: DiaryRecommendedQuestion? = null,
 
     @Column(name = "score", nullable = false)
-    val score: Integer,
+    val score: Int,
 )
