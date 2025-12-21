@@ -3,6 +3,7 @@ package kr.io.snuhbmilab.carediaryserverv2.domain.diary.controller
 import kr.io.snuhbmilab.carediaryserverv2.common.annotation.UserId
 import kr.io.snuhbmilab.carediaryserverv2.common.dto.CommonResponse
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.dto.request.DiaryCreateRequest
+import kr.io.snuhbmilab.carediaryserverv2.domain.diary.dto.response.DiaryCreateResponse
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.dto.response.DiaryDetailResponse
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.dto.response.DiaryFindAllResponse
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.facade.DiaryFacade
@@ -23,9 +24,11 @@ class DiaryController(
 ) {
 
     @PostMapping
-    fun createDiary(@UserId userId: UUID, @RequestBody request: DiaryCreateRequest): CommonResponse<Unit> {
-        diaryFacade.createDiary(userId, request)
-        return CommonResponse.ok()
+    fun createDiary(
+        @UserId userId: UUID,
+        @RequestBody request: DiaryCreateRequest
+    ): CommonResponse<DiaryCreateResponse> {
+        return CommonResponse.ok(diaryFacade.createDiary(userId, request))
     }
 
     @GetMapping("/me")

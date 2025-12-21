@@ -2,6 +2,7 @@ package kr.io.snuhbmilab.carediaryserverv2.domain.diary.facade
 
 import kr.io.snuhbmilab.carediaryserverv2.common.exception.BusinessException
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.dto.request.DiaryCreateRequest
+import kr.io.snuhbmilab.carediaryserverv2.domain.diary.dto.response.DiaryCreateResponse
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.dto.response.DiaryDetailResponse
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.dto.response.DiaryFindAllResponse
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.entity.Diary
@@ -24,16 +25,19 @@ class DiaryFacade(
 ) {
 
     @Transactional
-    fun createDiary(userId: UUID, request: DiaryCreateRequest) {
+    fun createDiary(userId: UUID, request: DiaryCreateRequest): DiaryCreateResponse {
         val user = userService.findById(userId)
-
-        //TODO: 외부 LLM 연동한 요약문 생성 API 호출
 
         val diary = diaryService.create(user, request.date, request.content, request.emotion)
 
         request.questionScores.forEach {
             diaryRecommendedQuestionService.appendQuestionUserScore(diary, it.questionText, it.score)
         }
+
+        //TODO: 외부 LLM 연동한 요약문 생성 API 호출
+        val summary = "고생했어요~ diaryId: ${diary.id}, diaryDate: ${diary.date}"
+
+        return DiaryCreateResponse(summary)
     }
 
     fun findAllDiariesByMe(userId: UUID, startDate: LocalDate?, endDate: LocalDate?): DiaryFindAllResponse {
