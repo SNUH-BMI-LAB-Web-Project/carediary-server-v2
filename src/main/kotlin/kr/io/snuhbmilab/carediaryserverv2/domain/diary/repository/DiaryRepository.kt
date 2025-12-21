@@ -19,8 +19,16 @@ interface DiaryRepository : JpaRepository<Diary, UUID> {
     fun countByUploaderIdAndDateBetween(uploaderId: UUID, startDate: LocalDate, endDate: LocalDate): Long
     fun countByUploaderIdAndEmotion(uploaderId: UUID, emotion: Diary.Emotion): Int
 
-    @Query("SELECT d.date FROM Diary d WHERE d.uploader.id = :uploaderId AND d.date BETWEEN :startDate AND :endDate")
-    fun findAllDateByUploaderIdAndDateBetween(
+    @Query(
+        """
+            SELECT DISTINCT d.date
+            FROM Diary d
+            WHERE d.uploader.id = :uploaderId
+            AND d.date BETWEEN :startDate AND :endDate
+            ORDER BY d.date
+        """
+    )
+    fun findDistinctDatesByUploaderIdAndDateBetween(
         uploaderId: UUID,
         startDate: LocalDate,
         endDate: LocalDate

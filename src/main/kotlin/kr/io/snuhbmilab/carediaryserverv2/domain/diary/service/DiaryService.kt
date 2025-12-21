@@ -69,6 +69,6 @@ class DiaryService(
 
     fun findDatesMonthly(userId: UUID, yearMonth: YearMonth): List<LocalDate> {
         val dateRange = yearMonth.toDateRange()
-        return diaryRepository.findAllDateByUploaderIdAndDateBetween(userId, dateRange.start, dateRange.endInclusive)
+        return diaryRepository.findDistinctDatesByUploaderIdAndDateBetween(userId, dateRange.start, dateRange.endInclusive)
     }
 }
