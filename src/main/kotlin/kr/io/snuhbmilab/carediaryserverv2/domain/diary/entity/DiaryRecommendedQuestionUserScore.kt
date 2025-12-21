@@ -7,6 +7,7 @@ import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.JoinColumn
+import jakarta.persistence.Lob
 import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
 
@@ -22,12 +23,9 @@ class DiaryRecommendedQuestionUserScore(
     @JoinColumn(name = "diary_id", nullable = false)
     val diary: Diary,
 
-    @Column(name = "drq_id", nullable = false)
-    val questionId: Long,
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "drq_id", updatable = false, insertable = false)
-    var question: DiaryRecommendedQuestion? = null,
+    @Lob
+    @Column(name = "question_text", nullable = false, columnDefinition = "TEXT")
+    val questionText: String,
 
     @Column(name = "score", nullable = false)
     val score: Int,

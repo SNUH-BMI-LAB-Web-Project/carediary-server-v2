@@ -10,12 +10,15 @@ class DiaryRecommendedQuestionService(
     private val diaryRecommendedQuestionUserScoreRepository: DiaryRecommendedQuestionUserScoreRepository
 ) {
 
-    fun appendQuestionUserScore(diary: Diary, questionId: Long, score: Int) =
+    fun appendQuestionUserScore(diary: Diary, questionText: String, score: Int) =
         diaryRecommendedQuestionUserScoreRepository.save(
             DiaryRecommendedQuestionUserScore(
                 diary = diary,
-                questionId = questionId,
+                questionText = questionText,
                 score = score
             )
         )
+
+    fun findAllByDiary(diary: Diary): List<DiaryRecommendedQuestionUserScore> =
+        diaryRecommendedQuestionUserScoreRepository.findAllByDiaryOrderByIdAsc(diary)
 }

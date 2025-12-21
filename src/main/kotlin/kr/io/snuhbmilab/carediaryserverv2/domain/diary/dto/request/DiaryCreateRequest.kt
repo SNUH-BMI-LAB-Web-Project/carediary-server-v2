@@ -10,7 +10,7 @@ data class DiaryCreateRequest(
     val questionScores: List<QuestionScoreItem>
 ) {
     data class QuestionScoreItem(
-        val questionId: Long,
+        val questionText: String,
         val score: Int
     )
 }
