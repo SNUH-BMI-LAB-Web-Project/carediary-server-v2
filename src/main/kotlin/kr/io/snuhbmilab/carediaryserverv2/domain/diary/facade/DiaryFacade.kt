@@ -59,7 +59,7 @@ class DiaryFacade(
     }
 
     private fun validateDiaryUploader(user: User, diary: Diary) {
-        require(user.id == diary.uploader.id) {
+        if (user.id != diary.uploader.id) {
             throw BusinessException(DiaryErrorCode.DIARY_ACCESS_DENIED)
         }
     }
