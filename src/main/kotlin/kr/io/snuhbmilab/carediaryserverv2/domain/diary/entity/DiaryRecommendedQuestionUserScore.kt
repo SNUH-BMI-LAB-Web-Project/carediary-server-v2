@@ -10,9 +10,18 @@ import jakarta.persistence.JoinColumn
 import jakarta.persistence.Lob
 import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
+import jakarta.persistence.UniqueConstraint
 
 @Entity
-@Table(name = "diary_recommended_questions_user_scores")
+@Table(
+    name = "diary_recommended_questions_user_scores",
+    uniqueConstraints = [
+        UniqueConstraint(
+            name = "uk_diary_recommended_question_text",
+            columnNames = ["diary_id", "question_text"]
+        )
+    ]
+)
 class DiaryRecommendedQuestionUserScore(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
