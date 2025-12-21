@@ -4,5 +4,4 @@ import java.time.LocalDate
 
 data class DiaryDatesResponse(
     val dates: List<LocalDate>
-) {
-}
+)
