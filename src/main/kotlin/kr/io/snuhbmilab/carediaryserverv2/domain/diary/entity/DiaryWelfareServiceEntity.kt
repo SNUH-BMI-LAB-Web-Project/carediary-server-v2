@@ -17,7 +17,7 @@ import kr.io.snuhbmilab.carediaryserverv2.domain.user.entity.User
 
 @Entity
 @Table(name = "diary_welfare_services")
-class DiaryWelfareService(
+class DiaryWelfareServiceEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "dws_id", nullable = false)

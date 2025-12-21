@@ -10,4 +10,6 @@ interface DiaryRepository : JpaRepository<Diary, UUID> {
     fun findAllByUploaderOrderByDateDesc(user: User): List<Diary>
     fun findAllByUploaderAndDateOrderByCreatedAtDesc(user: User, startDate: LocalDate): List<Diary>
     fun findAllByUploaderAndDateBetweenOrderByDateDesc(user: User, startDate: LocalDate, endDate: LocalDate): List<Diary>
+    fun countByUploaderIdAndDateBetween(uploaderId: UUID, dateAfter: LocalDate, dateBefore: LocalDate): Long
+    fun countByUploaderIdAndEmotion(userId: UUID, emotion: Diary.Emotion): Int
 }
