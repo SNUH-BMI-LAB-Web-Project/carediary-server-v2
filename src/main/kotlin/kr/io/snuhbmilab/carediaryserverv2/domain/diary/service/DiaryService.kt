@@ -67,7 +67,8 @@ class DiaryService(
         return diaryRepository.countByUploaderIdAndEmotion(userId, emotion)
     }
 
-    fun findDatesMonthly(user: User, yearMonth: YearMonth): List<LocalDate> {
-
+    fun findDatesMonthly(userId: UUID, yearMonth: YearMonth): List<LocalDate> {
+        val dateRange = yearMonth.toDateRange()
+        return diaryRepository.findAllDateByUploaderIdAndDateBetween(userId, dateRange.start, dateRange.endInclusive)
     }
 }

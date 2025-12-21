@@ -5,6 +5,7 @@ import kr.io.snuhbmilab.carediaryserverv2.common.annotation.UserId
 import kr.io.snuhbmilab.carediaryserverv2.common.dto.CommonResponse
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.dto.request.DiaryCreateRequest
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.dto.response.DiaryCreateResponse
+import kr.io.snuhbmilab.carediaryserverv2.domain.diary.dto.response.DiaryDatesResponse
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.dto.response.DiaryDetailResponse
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.dto.response.DiaryFindAllResponse
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.facade.DiaryFacade
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.time.LocalDate
+import java.time.YearMonth
 import java.util.UUID
 
 @RestController
@@ -47,5 +49,13 @@ class DiaryController(
         @PathVariable diaryId: UUID
     ): CommonResponse<DiaryDetailResponse> {
         return CommonResponse.ok(diaryFacade.findDiaryById(userId, diaryId))
+    }
+
+    @GetMapping("/dates")
+    fun findDates(
+        @UserId userId: UUID,
+        @RequestParam month: YearMonth
+    ): CommonResponse<DiaryDatesResponse> {
+        return CommonResponse.ok(diaryFacade.findDates(userId, month))
     }
 }
