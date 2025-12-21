@@ -66,6 +66,9 @@ class DiaryWelfareService(
     @Lob
     @Column(name = "matched_interest_keywords", columnDefinition = "TEXT")
     val matchedInterestKeywords: String? = null,
+
+    @Column(columnDefinition = "TINYINT(1)")
+    val visible: Boolean = false
 ) : BaseTimeEntity() {
 
     enum class ServiceScope {
