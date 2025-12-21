@@ -26,15 +26,15 @@ class DiaryService(
 
     fun findAllByUserAndPeriod(user: User, startDate: LocalDate?, endDate: LocalDate?): List<Diary> {
         if (startDate == null && endDate == null) {
-            return diaryRepository.findAllByUploader(user)
+            return diaryRepository.findAllByUploaderOrderByDateDesc(user)
         }
 
         if ((startDate != null && endDate == null) || (startDate?.isEqual(endDate) == true)) {
-            return diaryRepository.findAllByUploaderAndDate(user, startDate)
+            return diaryRepository.findAllByUploaderAndDateOrderByCreatedAtDesc(user, startDate)
         }
 
         if (startDate != null && endDate != null && startDate.isBefore(endDate)) {
-            return diaryRepository.findAllByUploaderAndDateBetween(user, startDate, endDate)
+            return diaryRepository.findAllByUploaderAndDateBetweenOrderByDateDesc(user, startDate, endDate)
         }
 
         return emptyList()
