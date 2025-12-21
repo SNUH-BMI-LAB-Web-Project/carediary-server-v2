@@ -1,5 +1,6 @@
 package kr.io.snuhbmilab.carediaryserverv2.domain.diary.controller
 
+import jakarta.validation.Valid
 import kr.io.snuhbmilab.carediaryserverv2.common.annotation.UserId
 import kr.io.snuhbmilab.carediaryserverv2.common.dto.CommonResponse
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.dto.request.DiaryCreateRequest
@@ -26,7 +27,7 @@ class DiaryController(
     @PostMapping
     fun createDiary(
         @UserId userId: UUID,
-        @RequestBody request: DiaryCreateRequest
+        @Valid @RequestBody request: DiaryCreateRequest
     ): CommonResponse<DiaryCreateResponse> {
         return CommonResponse.ok(diaryFacade.createDiary(userId, request))
     }
