@@ -3,6 +3,7 @@ package kr.io.snuhbmilab.carediaryserverv2.domain.diary.facade
 import kr.io.snuhbmilab.carediaryserverv2.common.exception.BusinessException
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.dto.request.DiaryCreateRequest
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.dto.response.DiaryCreateResponse
+import kr.io.snuhbmilab.carediaryserverv2.domain.diary.dto.response.DiaryDatesResponse
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.dto.response.DiaryDetailResponse
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.dto.response.DiaryFindAllResponse
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.entity.Diary
@@ -14,6 +15,7 @@ import kr.io.snuhbmilab.carediaryserverv2.domain.user.service.UserService
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
+import java.time.YearMonth
 import java.util.UUID
 
 @Service
@@ -56,6 +58,13 @@ class DiaryFacade(
         val questionScores = diaryRecommendedQuestionService.findAllByDiary(diary)
 
         return DiaryDetailResponse.of(diary, questionScores)
+    }
+
+    fun findDates(userId: UUID, month: YearMonth): DiaryDatesResponse {
+        val user = userService.findById(userId)
+        val dates = diaryService.findDatesMonthly(userId, month)
+
+        return DiaryDatesResponse(dates)
     }
 
     private fun validateDiaryUploader(user: User, diary: Diary) {

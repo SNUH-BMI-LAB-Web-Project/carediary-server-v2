@@ -1,5 +1,6 @@
 package kr.io.snuhbmilab.carediaryserverv2.domain.diary.service
 
+import kr.io.snuhbmilab.carediaryserverv2.common.constants.toDateRange
 import kr.io.snuhbmilab.carediaryserverv2.common.exception.BusinessException
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.entity.Diary
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.exception.DiaryErrorCode
@@ -8,6 +9,8 @@ import kr.io.snuhbmilab.carediaryserverv2.domain.user.entity.User
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import java.time.LocalDate
+import java.time.Year
+import java.time.YearMonth
 import java.util.UUID
 
 @Service
@@ -41,7 +44,31 @@ class DiaryService(
     }
 
     fun findById(diaryId: UUID): Diary {
-        return diaryRepository.findByIdOrNull(diaryId) ?:
-            throw BusinessException(DiaryErrorCode.DIARY_NOT_FOUND)
+        return diaryRepository.findByIdOrNull(diaryId)
+            ?: throw BusinessException(DiaryErrorCode.DIARY_NOT_FOUND)
+    }
+
+    fun countMonthly(userId: UUID, yearMonth: YearMonth): Int {
+        val dateRange = yearMonth.toDateRange()
+        return diaryRepository
+            .countByUploaderIdAndDateBetween(userId, dateRange.start, dateRange.endInclusive)
+            .toInt()
+    }
+
+    fun countYearly(userId: UUID, year: Year): Int {
+        val dateRange = year.toDateRange()
+        return diaryRepository
+            .countByUploaderIdAndDateBetween(userId, dateRange.start, dateRange.endInclusive)
+            .toInt()
+    }
+
+    fun countByEmotion(userId: UUID): Map<Diary.Emotion, Int> {
+        val results = diaryRepository.countByUploaderIdGroupByEmotion(userId)
+        return results.associate { it.emotion to it.count.toInt() }
+    }
+
+    fun findDatesMonthly(userId: UUID, yearMonth: YearMonth): List<LocalDate> {
+        val dateRange = yearMonth.toDateRange()
+        return diaryRepository.findDistinctDatesByUploaderIdAndDateBetween(userId, dateRange.start, dateRange.endInclusive)
     }
 }

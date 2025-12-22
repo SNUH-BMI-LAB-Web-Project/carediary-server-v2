@@ -17,7 +17,7 @@ import kr.io.snuhbmilab.carediaryserverv2.domain.user.entity.User
 
 @Entity
 @Table(name = "diary_welfare_services")
-class DiaryWelfareService(
+class DiaryWelfareServiceEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "dws_id", nullable = false)
@@ -66,6 +66,9 @@ class DiaryWelfareService(
     @Lob
     @Column(name = "matched_interest_keywords", columnDefinition = "TEXT")
     val matchedInterestKeywords: String? = null,
+
+    @Column(columnDefinition = "TINYINT(1)")
+    val visible: Boolean = false
 ) : BaseTimeEntity() {
 
     enum class ServiceScope {
