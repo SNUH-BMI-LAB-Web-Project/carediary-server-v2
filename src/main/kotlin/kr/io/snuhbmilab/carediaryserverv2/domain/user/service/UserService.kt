@@ -7,10 +7,10 @@ import kr.io.snuhbmilab.carediaryserverv2.domain.user.repository.UserRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDate
 import java.util.UUID
 
 @Service
-@Transactional(readOnly = true)
 class UserService(
     private val userRepository: UserRepository,
 ) {
@@ -20,4 +20,8 @@ class UserService(
 
     fun findById(userId: UUID): User = userRepository.findByIdOrNull(userId)
         ?: throw BusinessException(UserErrorCode.USER_NOT_FOUND)
+
+    fun updateFirstDiaryDate(user: User, date: LocalDate) {
+        user.firstDiaryDate = date
+    }
 }

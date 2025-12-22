@@ -17,7 +17,7 @@ import java.util.UUID
 class DiaryService(
     private val diaryRepository: DiaryRepository
 ) {
-    fun create(user: User, date: LocalDate, content: String, emotion: Diary.Emotion) =
+    fun create(user: User, date: LocalDate, content: String, emotion: Diary.Emotion): Diary =
         diaryRepository.save(
             Diary(
                 uploader = user,
@@ -70,5 +70,9 @@ class DiaryService(
     fun findDatesMonthly(userId: UUID, yearMonth: YearMonth): List<LocalDate> {
         val dateRange = yearMonth.toDateRange()
         return diaryRepository.findDistinctDatesByUploaderIdAndDateBetween(userId, dateRange.start, dateRange.endInclusive)
+    }
+
+    fun isFirstDiaryEntry(userId: UUID): Boolean {
+        return diaryRepository.existsByUploaderId(userId)
     }
 }
