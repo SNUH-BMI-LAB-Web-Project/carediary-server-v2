@@ -1,6 +1,6 @@
 package kr.io.snuhbmilab.carediaryserverv2.domain.diary.service
 
-import kr.io.snuhbmilab.carediaryserverv2.common.constants.toDateRange
+import kr.io.snuhbmilab.carediaryserverv2.common.utils.toDateRange
 import kr.io.snuhbmilab.carediaryserverv2.common.exception.BusinessException
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.entity.Diary
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.exception.DiaryErrorCode

@@ -1,5 +1,7 @@
 package kr.io.snuhbmilab.carediaryserverv2.domain.scalequestion.dto.response
 
+import kr.io.snuhbmilab.carediaryserverv2.common.utils.parseListFromDBText
+import kr.io.snuhbmilab.carediaryserverv2.domain.scalequestion.constants.ScaleCategory
 import kr.io.snuhbmilab.carediaryserverv2.domain.scalequestion.entity.ScaleQuestion
 
 data class ScaleQuestionFindAllResponse(
@@ -8,14 +10,20 @@ data class ScaleQuestionFindAllResponse(
     data class ScaleQuestionDto(
         val scaleQuestionId: Long,
         val questionNumber: Int,
-        val content: String
+        val content: String,
+        val scaleCategory: ScaleCategory,
+        val optionCount: Int,
+        val options: List<String>
     ) {
         companion object {
             @JvmStatic
             fun from(scaleQuestion: ScaleQuestion) = ScaleQuestionDto(
                 scaleQuestionId = scaleQuestion.id!!,
                 questionNumber = scaleQuestion.questionNumber,
-                content = scaleQuestion.content
+                content = scaleQuestion.content,
+                scaleCategory = scaleQuestion.scaleCategory,
+                optionCount = scaleQuestion.optionCount,
+                options = scaleQuestion.options.parseListFromDBText()
             )
         }
     }

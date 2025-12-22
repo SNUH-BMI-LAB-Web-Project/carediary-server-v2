@@ -1,4 +1,4 @@
-package kr.io.snuhbmilab.carediaryserverv2.common.constants
+package kr.io.snuhbmilab.carediaryserverv2.common.utils
 
 import java.time.LocalDate
 import java.time.Year
