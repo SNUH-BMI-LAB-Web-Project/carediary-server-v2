@@ -23,5 +23,6 @@ class UserService(
 
     fun updateFirstDiaryDate(user: User, date: LocalDate) {
         user.firstDiaryDate = date
+        user.termCount = 1
     }
 }
