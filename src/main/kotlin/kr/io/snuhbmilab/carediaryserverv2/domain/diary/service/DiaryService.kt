@@ -9,7 +9,6 @@ import kr.io.snuhbmilab.carediaryserverv2.domain.user.entity.User
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import java.time.LocalDate
-import java.time.MonthDay
 import java.time.Year
 import java.time.YearMonth
 import java.util.UUID
