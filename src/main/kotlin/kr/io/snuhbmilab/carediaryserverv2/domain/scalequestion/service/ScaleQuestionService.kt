@@ -1,5 +1,6 @@
 package kr.io.snuhbmilab.carediaryserverv2.domain.scalequestion.service
 
+import kr.io.snuhbmilab.carediaryserverv2.domain.scalequestion.entity.ScaleQuestion
 import kr.io.snuhbmilab.carediaryserverv2.domain.scalequestion.entity.ScaleQuestionUserAnswer
 import kr.io.snuhbmilab.carediaryserverv2.domain.scalequestion.repository.ScaleQuestionRepository
 import kr.io.snuhbmilab.carediaryserverv2.domain.scalequestion.repository.ScaleQuestionUserAnswerRepository
@@ -23,4 +24,6 @@ class ScaleQuestionService(
             )
         )
     }
+
+    fun findAllByIds(ids: List<Long>): List<ScaleQuestion> = scaleQuestionRepository.findAllById(ids)
 }

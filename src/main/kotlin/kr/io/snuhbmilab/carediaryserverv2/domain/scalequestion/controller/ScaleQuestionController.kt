@@ -1,11 +1,11 @@
 package kr.io.snuhbmilab.carediaryserverv2.domain.scalequestion.controller
 
 import jakarta.validation.Valid
-import kr.io.snuhbmilab.carediaryserverv2.common.annotation.AuthenticationRequired
 import kr.io.snuhbmilab.carediaryserverv2.common.annotation.UserId
 import kr.io.snuhbmilab.carediaryserverv2.common.dto.CommonResponse
 import kr.io.snuhbmilab.carediaryserverv2.domain.scalequestion.dto.request.ScaleQuestionUserAnswerRegisterRequest
 import kr.io.snuhbmilab.carediaryserverv2.domain.scalequestion.dto.response.ScaleQuestionFindAllResponse
+import kr.io.snuhbmilab.carediaryserverv2.domain.scalequestion.dto.response.UserScaleFindAllResponse
 import kr.io.snuhbmilab.carediaryserverv2.domain.scalequestion.facade.ScaleQuestionFacade
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
@@ -15,7 +15,7 @@ import java.util.UUID
 
 @RestController
 class ScaleQuestionController(
-    private val scaleQuestionFacade: ScaleQuestionFacade
+    private val scaleQuestionFacade: ScaleQuestionFacade,
 ) {
 
     @PostMapping("/v1/users/scale-questions")
@@ -27,9 +27,15 @@ class ScaleQuestionController(
         return CommonResponse.ok()
     }
 
-    @AuthenticationRequired
     @GetMapping("/v1/scale-questions")
     fun findAllScaleQuestions(): CommonResponse<ScaleQuestionFindAllResponse> {
         return CommonResponse.ok(scaleQuestionFacade.findAllScaleQuestions())
+    }
+
+    @GetMapping("/v1/users/scales")
+    fun findAllUserScales(
+        @UserId userId: UUID
+    ) : CommonResponse<UserScaleFindAllResponse> {
+        return CommonResponse.ok(scaleQuestionFacade.findAllUserScales(userId))
     }
 }
