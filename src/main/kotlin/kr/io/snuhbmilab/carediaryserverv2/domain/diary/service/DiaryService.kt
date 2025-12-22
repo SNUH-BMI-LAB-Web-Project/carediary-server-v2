@@ -62,8 +62,9 @@ class DiaryService(
             .toInt()
     }
 
-    fun countByEmotion(userId: UUID, emotion: Diary.Emotion): Int {
-        return diaryRepository.countByUploaderIdAndEmotion(userId, emotion)
+    fun countByEmotion(userId: UUID): Map<Diary.Emotion, Int> {
+        val results = diaryRepository.countByUploaderIdGroupByEmotion(userId)
+        return results.associate { it.emotion to it.count.toInt() }
     }
 
     fun findDatesMonthly(userId: UUID, yearMonth: YearMonth): List<LocalDate> {

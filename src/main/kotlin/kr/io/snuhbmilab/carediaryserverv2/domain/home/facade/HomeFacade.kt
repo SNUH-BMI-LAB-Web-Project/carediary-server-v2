@@ -5,6 +5,7 @@ import kr.io.snuhbmilab.carediaryserverv2.domain.diary.service.DiaryService
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.service.WelfareRecommendService
 import kr.io.snuhbmilab.carediaryserverv2.domain.home.dto.response.HomeResponse
 import kr.io.snuhbmilab.carediaryserverv2.domain.user.service.UserService
+import org.apache.commons.lang3.concurrent.ConcurrentUtils.putIfAbsent
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.Year
@@ -23,11 +24,11 @@ class HomeFacade(
         val user = userService.findById(userId)
         val monthlyDiaryCount = diaryService.countMonthly(userId, YearMonth.now())
         val yearlyDiaryCount = diaryService.countYearly(userId, Year.now())
-        val emotionCountMap = EnumMap<Diary.Emotion, Int>(Diary.Emotion::class.java)
-
-        enumValues<Diary.Emotion>().forEach { emotion ->
-            emotionCountMap[emotion] = diaryService.countByEmotion(userId, emotion)
-        }
+        val emotionCountMap = diaryService.countByEmotion(userId)
+            .toMutableMap()
+            .apply {
+                enumValues<Diary.Emotion>().forEach { putIfAbsent(it, 0) }
+            }
 
         val welfareServices = welfareRecommendService.findAllVisible(user)
 
