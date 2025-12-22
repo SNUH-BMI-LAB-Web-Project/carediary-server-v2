@@ -5,12 +5,10 @@ import kr.io.snuhbmilab.carediaryserverv2.domain.diary.service.DiaryService
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.service.WelfareRecommendService
 import kr.io.snuhbmilab.carediaryserverv2.domain.home.dto.response.HomeResponse
 import kr.io.snuhbmilab.carediaryserverv2.domain.user.service.UserService
-import org.apache.commons.lang3.concurrent.ConcurrentUtils.putIfAbsent
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.Year
 import java.time.YearMonth
-import java.util.EnumMap
 import java.util.UUID
 
 @Service
