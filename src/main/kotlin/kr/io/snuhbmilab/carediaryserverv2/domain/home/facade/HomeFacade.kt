@@ -4,6 +4,7 @@ import kr.io.snuhbmilab.carediaryserverv2.domain.diary.entity.Diary
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.service.DiaryService
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.service.WelfareRecommendService
 import kr.io.snuhbmilab.carediaryserverv2.domain.home.dto.response.HomeResponse
+import kr.io.snuhbmilab.carediaryserverv2.domain.scalequestion.service.ScaleQuestionService
 import kr.io.snuhbmilab.carediaryserverv2.domain.user.service.UserService
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -16,7 +17,8 @@ import java.util.UUID
 class HomeFacade(
     private val userService: UserService,
     private val diaryService: DiaryService,
-    private val welfareRecommendService: WelfareRecommendService
+    private val welfareRecommendService: WelfareRecommendService,
+    private val scaleQuestionService: ScaleQuestionService
 ) {
     fun getHome(userId: UUID): HomeResponse {
         val user = userService.findById(userId)
@@ -29,12 +31,16 @@ class HomeFacade(
             }
 
         val welfareServices = welfareRecommendService.findAllVisible(user)
+        val termCount = user.termCount
+        val isScaleQuestionRequired = !scaleQuestionService.hasCompleted(user, termCount)
 
         return HomeResponse.of(
             monthlyDiaryCount,
             yearlyDiaryCount,
             emotionCountMap,
-            welfareServices
+            welfareServices,
+            isScaleQuestionRequired,
+            termCount
         )
     }
 }

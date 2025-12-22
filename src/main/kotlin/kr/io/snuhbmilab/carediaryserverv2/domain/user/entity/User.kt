@@ -47,8 +47,11 @@ class User(
     @Column(name = "primay_diagnosis")
     var primaryDiagnosis: String? = null,
 
-    @Column(name = "scale_question_term_count")
-    var scaleQuestionTermCount: Int = 0
+    @Column(name = "scale_question_term_count", nullable = false)
+    var scaleQuestionTermCount: Int = 0,
+
+    @Column(name = "term_count")
+    var termCount: Int = 0
 ) : BaseTimeEntity() {
 
     fun register(
