@@ -18,16 +18,12 @@ class UserTermCountScheduler(
     @Scheduled(cron = "0 0 0 * * *", zone = "Asia/Seoul")
     fun updateTermCount() {
         logger.info { "UserTermCountScheduler 시작" }
-        userRepository.findAll().forEach { user ->
-            if (user.firstDiaryDate == null) return
-
+        userRepository.findAllByFirstDiaryDateIsNotNullAndTermCountGreaterThan(0).forEach { user ->
+            val firstDiaryDate = user.firstDiaryDate!!
             val termCount = user.termCount
-
-            if (termCount == 0) return
-
             val today = LocalDate.now()
 
-            if (user.firstDiaryDate!!.plusDays(7L * termCount) == today) {
+            if (firstDiaryDate.plusDays(7L * termCount) == today) {
                 user.termCount++
                 logger.info { "사용자 회기 증가: userId=${user.id!!} termCount=${termCount} -> ${user.termCount}" }
             }
