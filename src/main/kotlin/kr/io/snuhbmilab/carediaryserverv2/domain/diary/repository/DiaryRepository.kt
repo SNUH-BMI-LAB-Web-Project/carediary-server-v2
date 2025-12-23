@@ -41,4 +41,6 @@ interface DiaryRepository : JpaRepository<Diary, UUID> {
         startDate: LocalDate,
         endDate: LocalDate
     ): List<LocalDate>
+
+    fun existsByUploaderId(userId: UUID): Boolean
 }

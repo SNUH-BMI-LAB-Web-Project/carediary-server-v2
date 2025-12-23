@@ -30,6 +30,11 @@ class DiaryFacade(
     fun createDiary(userId: UUID, request: DiaryCreateRequest): DiaryCreateResponse {
         val user = userService.findById(userId)
 
+        //첫 작성이라면 사용자의 첫 작성일 저장
+        if (diaryService.isFirstDiaryEntry(userId)) {
+            userService.updateFirstDiaryDate(user, request.date)
+        }
+
         val diary = diaryService.create(user, request.date, request.content, request.emotion)
 
         request.questionScores.forEach {

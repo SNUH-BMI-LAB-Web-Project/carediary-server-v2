@@ -24,7 +24,7 @@ class UserInformationService(
         chiefComplaint: String?,
         currentHospital: String?,
         currentResidence: String?
-    ) = userInformationRepository.save(
+    ): UserInformation = userInformationRepository.save(
         UserInformation(
             user = user,
             educationBeforeOnset = educationBeforeOnset,

@@ -7,7 +7,9 @@ data class HomeResponse(
     val monthlyDiaryCount: Int,
     val yearlyDiaryCount: Int,
     val emotionCounts: Map<Diary.Emotion, Int>,
-    val recommendedWelfareServices: List<WelfareServiceItem>
+    val recommendedWelfareServices: List<WelfareServiceItem>,
+    val isScaleQuestionRequired: Boolean,
+    val termCount: Int,
 ) {
     data class WelfareServiceItem(
         val serviceName: String,
@@ -30,12 +32,16 @@ data class HomeResponse(
             monthlyDiaryCount: Int,
             yearlyDiaryCount: Int,
             emotionCounts: Map<Diary.Emotion, Int>,
-            recommendedWelfareServices: List<DiaryWelfareServiceEntity>
+            recommendedWelfareServices: List<DiaryWelfareServiceEntity>,
+            isScaleQuestionRequired: Boolean,
+            termCount: Int
         ) = HomeResponse(
             monthlyDiaryCount = monthlyDiaryCount,
             yearlyDiaryCount = yearlyDiaryCount,
             emotionCounts = emotionCounts,
-            recommendedWelfareServices = recommendedWelfareServices.map { WelfareServiceItem.from(it) }
+            recommendedWelfareServices = recommendedWelfareServices.map { WelfareServiceItem.from(it) },
+            isScaleQuestionRequired = isScaleQuestionRequired,
+            termCount = termCount
         )
     }
 }
