@@ -29,5 +29,9 @@ class ScaleQuestionService(
 
     fun findAllByIds(ids: List<Long>): List<ScaleQuestion> = scaleQuestionRepository.findAllById(ids)
 
-    fun hasCompleted(user: User, termCount: Int): Boolean = userScaleRepository.existsByUserIdAndTermCount(user.id!!, termCount / 8)
+    fun needsScaleQuestion(user: User, termCount: Int): Boolean = !userScaleRepository.existsByUserIdAndTermCount(user.id!!, termCount / SCALE_QUESTION_INTERVAL)
+
+    companion object {
+        const val SCALE_QUESTION_INTERVAL = 8
+    }
 }

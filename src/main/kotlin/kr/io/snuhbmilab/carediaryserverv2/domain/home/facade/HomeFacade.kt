@@ -32,7 +32,7 @@ class HomeFacade(
 
         val welfareServices = welfareRecommendService.findAllVisible(user)
         val termCount = user.termCount
-        val isScaleQuestionRequired = !scaleQuestionService.hasCompleted(user, termCount)
+        val isScaleQuestionRequired = scaleQuestionService.needsScaleQuestion(user, termCount)
 
         return HomeResponse.of(
             monthlyDiaryCount,
