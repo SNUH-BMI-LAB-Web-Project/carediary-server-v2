@@ -73,6 +73,6 @@ class DiaryService(
     }
 
     fun isFirstDiaryEntry(userId: UUID): Boolean {
-        return diaryRepository.existsByUploaderId(userId)
+        return !diaryRepository.existsByUploaderId(userId)
     }
 }
