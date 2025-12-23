@@ -21,6 +21,7 @@ class UserService(
     fun findById(userId: UUID): User = userRepository.findByIdOrNull(userId)
         ?: throw BusinessException(UserErrorCode.USER_NOT_FOUND)
 
+    @Transactional
     fun updateFirstDiaryDate(user: User, date: LocalDate) {
         user.firstDiaryDate = date
         user.termCount = 1
