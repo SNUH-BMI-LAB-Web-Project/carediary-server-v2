@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import java.util.UUID
 
 @Tag(name = "User", description = "사용자 관련 API")
-@SecurityRequirement(name = "bearerAuth")
+@SecurityRequirement(name = "JWT")
 interface UserApi {
 
     @Operation(

@@ -12,7 +12,7 @@ import kr.io.snuhbmilab.carediaryserverv2.domain.home.dto.response.HomeResponse
 import java.util.UUID
 
 @Tag(name = "Home", description = "홈 화면 API")
-@SecurityRequirement(name = "bearerAuth")
+@SecurityRequirement(name = "JWT")
 interface HomeApi {
 
     @Operation(

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import java.util.UUID
 
 @Tag(name = "Scale Question", description = "척도 질문 관련 API")
-@SecurityRequirement(name = "bearerAuth")
+@SecurityRequirement(name = "JWT")
 interface ScaleQuestionApi {
 
     @Operation(

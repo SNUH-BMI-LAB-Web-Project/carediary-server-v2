@@ -22,7 +22,7 @@ import java.time.YearMonth
 import java.util.UUID
 
 @Tag(name = "Diary", description = "일기 관련 API")
-@SecurityRequirement(name = "bearerAuth")
+@SecurityRequirement(name = "JWT")
 interface DiaryApi {
 
     @Operation(
