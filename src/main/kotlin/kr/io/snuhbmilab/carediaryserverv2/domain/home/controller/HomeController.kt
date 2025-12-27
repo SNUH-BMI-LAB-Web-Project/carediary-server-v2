@@ -13,10 +13,10 @@ import java.util.UUID
 @RequestMapping("/v1/home")
 class HomeController(
     private val homeFacade: HomeFacade
-) {
+) : HomeApi {
 
     @GetMapping
-    fun getHome(@UserId userId: UUID): CommonResponse<HomeResponse> {
+    override fun getHome(@UserId userId: UUID): CommonResponse<HomeResponse> {
         return CommonResponse.ok(homeFacade.getHome(userId))
     }
 }
