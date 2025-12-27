@@ -1,7 +1,9 @@
 package kr.io.snuhbmilab.carediaryserverv2.domain.user.facade
 
+import kr.io.snuhbmilab.carediaryserverv2.auth.jwt.service.JwtProvider
 import kr.io.snuhbmilab.carediaryserverv2.domain.user.dto.request.UserRegisterRequest
 import kr.io.snuhbmilab.carediaryserverv2.domain.user.dto.response.CurrentUserResponse
+import kr.io.snuhbmilab.carediaryserverv2.domain.user.dto.response.UserRegisterResponse
 import kr.io.snuhbmilab.carediaryserverv2.domain.user.service.UserInformationService
 import kr.io.snuhbmilab.carediaryserverv2.domain.user.service.UserService
 import org.springframework.stereotype.Service
@@ -12,10 +14,11 @@ import java.util.UUID
 @Transactional(readOnly = true)
 class UserFacade(
     private val userService: UserService,
-    private val userInformationService: UserInformationService
+    private val userInformationService: UserInformationService,
+    private val jwtProvider: JwtProvider
 ) {
     @Transactional
-    fun register(userId: UUID, request: UserRegisterRequest) {
+    fun register(userId: UUID, request: UserRegisterRequest): UserRegisterResponse {
         val user = userService.findById(userId)
 
         user.register(
@@ -27,26 +30,30 @@ class UserFacade(
             request.primaryDiagnosis
         )
 
-        if (user.isAdmin()) return
+        if (!user.isAdmin()) {
+            userInformationService.create(
+                user = user,
+                educationBeforeOnset = request.educationBeforeOnset,
+                previousDiagnosis = request.previousDiagnosis,
+                diagnosisYearMonth = request.diagnosisYearMonth,
+                diagnosisHospital = request.diagnosisHospital,
+                chiefComplaint = request.chiefComplaint,
+                currentHospital = request.currentHospital,
+                currentResidence = request.currentResidence,
+                medicalCoverage = request.medicalCoverage,
+                specialCaseRegistered = request.specialCaseRegistered,
+                specialCaseRegisteredDate = request.specialCaseRegisteredDate,
+                disabilityRegistered = request.disabilityRegistered,
+                disabilityStatus = request.disabilityStatus,
+                disabilityType = request.disabilityType,
+                disabilitySeverity = request.disabilitySeverity,
+                socialWelfareServiceLabels = request.socialWelfareServiceLabels
+            )
+        }
 
-        userInformationService.create(
-            user = user,
-            educationBeforeOnset = request.educationBeforeOnset,
-            previousDiagnosis = request.previousDiagnosis,
-            diagnosisYearMonth = request.diagnosisYearMonth,
-            diagnosisHospital = request.diagnosisHospital,
-            chiefComplaint = request.chiefComplaint,
-            currentHospital = request.currentHospital,
-            currentResidence = request.currentResidence,
-            medicalCoverage = request.medicalCoverage,
-            specialCaseRegistered = request.specialCaseRegistered,
-            specialCaseRegisteredDate = request.specialCaseRegisteredDate,
-            disabilityRegistered = request.disabilityRegistered,
-            disabilityStatus = request.disabilityStatus,
-            disabilityType = request.disabilityType,
-            disabilitySeverity = request.disabilitySeverity,
-            socialWelfareServiceLabels = request.socialWelfareServiceLabels
-        )
+        val accessToken = jwtProvider.generateToken(user)
+
+        return UserRegisterResponse.from(accessToken)
     }
 
     fun getMe(userId: UUID): CurrentUserResponse {
