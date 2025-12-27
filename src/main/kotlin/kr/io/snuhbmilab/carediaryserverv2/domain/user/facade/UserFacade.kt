@@ -30,14 +30,22 @@ class UserFacade(
         if (user.isAdmin()) return
 
         userInformationService.create(
-            user,
-            request.educationBeforeOnset,
-            request.previousDiagnosis,
-            request.diagnosisYearMonth,
-            request.diagnosisHospital,
-            request.chiefComplaint,
-            request.currentHospital,
-            request.currentResidence
+            user = user,
+            educationBeforeOnset = request.educationBeforeOnset,
+            previousDiagnosis = request.previousDiagnosis,
+            diagnosisYearMonth = request.diagnosisYearMonth,
+            diagnosisHospital = request.diagnosisHospital,
+            chiefComplaint = request.chiefComplaint,
+            currentHospital = request.currentHospital,
+            currentResidence = request.currentResidence,
+            medicalCoverage = request.medicalCoverage,
+            specialCaseRegistered = request.specialCaseRegistered,
+            specialCaseRegisteredDate = request.specialCaseRegisteredDate,
+            disabilityRegistered = request.disabilityRegistered,
+            disabilityStatus = request.disabilityStatus,
+            disabilityType = request.disabilityType,
+            disabilitySeverity = request.disabilitySeverity,
+            socialWelfareServiceLabels = request.socialWelfareServiceLabels
         )
     }
 

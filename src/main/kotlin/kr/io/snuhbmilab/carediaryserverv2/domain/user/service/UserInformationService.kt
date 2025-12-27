@@ -1,12 +1,14 @@
 package kr.io.snuhbmilab.carediaryserverv2.domain.user.service
 
 import kr.io.snuhbmilab.carediaryserverv2.common.exception.BusinessException
+import kr.io.snuhbmilab.carediaryserverv2.common.utils.joinToStringDBText
 import kr.io.snuhbmilab.carediaryserverv2.domain.user.entity.User
 import kr.io.snuhbmilab.carediaryserverv2.domain.user.entity.UserInformation
 import kr.io.snuhbmilab.carediaryserverv2.domain.user.exception.UserErrorCode
 import kr.io.snuhbmilab.carediaryserverv2.domain.user.repository.UserInformationRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDate
 import java.time.YearMonth
 import java.util.UUID
 
@@ -23,7 +25,15 @@ class UserInformationService(
         diagnosisHospital: String?,
         chiefComplaint: String?,
         currentHospital: String?,
-        currentResidence: String?
+        currentResidence: String?,
+        medicalCoverage: UserInformation.MedicalCoverage?,
+        specialCaseRegistered: Boolean?,
+        specialCaseRegisteredDate: LocalDate?,
+        disabilityRegistered: Boolean?,
+        disabilityStatus: UserInformation.DisabilityStatus?,
+        disabilityType: String?,
+        disabilitySeverity: UserInformation.DisabilitySeverity?,
+        socialWelfareServiceLabels: List<String>?
     ): UserInformation = userInformationRepository.save(
         UserInformation(
             user = user,
@@ -33,7 +43,15 @@ class UserInformationService(
             diagnosisHospital = diagnosisHospital,
             chiefComplaint = chiefComplaint,
             currentHospital = currentHospital,
-            currentResidence = currentResidence
+            currentResidence = currentResidence,
+            medicalCoverage = medicalCoverage,
+            specialCaseRegistered = specialCaseRegistered,
+            specialCaseRegisteredDate = specialCaseRegisteredDate,
+            disabilityRegistered = disabilityRegistered,
+            disabilityStatus = disabilityStatus,
+            disabilityType = disabilityType,
+            disabilitySeverity = disabilitySeverity,
+            socialWelfareServiceLabels = socialWelfareServiceLabels?.joinToStringDBText()
         )
     )
 
