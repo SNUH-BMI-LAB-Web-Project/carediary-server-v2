@@ -73,6 +73,8 @@ class User(
         this.primaryDiagnosis = primaryDiagnosis
     }
 
+    fun isRegistered(): Boolean = name != null
+
     fun isAdmin(): Boolean = role == Role.ADMIN
 
     fun addScaleQuestionTermCount() {
