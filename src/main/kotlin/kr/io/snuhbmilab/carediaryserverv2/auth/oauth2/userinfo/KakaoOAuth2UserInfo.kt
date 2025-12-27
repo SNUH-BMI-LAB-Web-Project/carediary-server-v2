@@ -17,5 +17,6 @@ class KakaoOAuth2UserInfo(
 
     override val provider: OAuth2Provider = OAuth2Provider.KAKAO
 
-    override val socialId: String = attributes["id"].toString()
+    override val socialId: String = attributes["id"]?.toString() ?:
+        throw OAuth2Exception("The kakao account doesn't have an id.")
 }
