@@ -70,7 +70,7 @@ class UserInformation(
     @Column(name = "disability_type")
     val disabilityType: String? = null,
 
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     @Column(name = "disability_severity")
     val disabilitySeverity: DisabilitySeverity? = null,
 
