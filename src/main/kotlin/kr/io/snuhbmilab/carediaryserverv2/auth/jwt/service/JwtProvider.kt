@@ -30,10 +30,10 @@ class JwtProvider(
         return SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.jcaName)
     }
 
-    fun generateToken(user: User, expiredAt: Duration): String {
+    fun generateToken(user: User): String {
         val now = Date()
         return makeToken(
-            Date(now.time + expiredAt.toMillis()),
+            Date(now.time + jwtProperties.expiresIn.toMillis()),
             user.id.toString(),
             mapOf(
                 Pair("name", user.name),

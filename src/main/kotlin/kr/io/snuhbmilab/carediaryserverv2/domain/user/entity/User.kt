@@ -44,7 +44,7 @@ class User(
 
     var address: String? = null,
 
-    @Column(name = "primay_diagnosis")
+    @Column(name = "primary_diagnosis")
     var primaryDiagnosis: String? = null,
 
     @Column(name = "scale_question_term_count", nullable = false)
@@ -73,6 +73,8 @@ class User(
         this.primaryDiagnosis = primaryDiagnosis
     }
 
+    fun isRegistered(): Boolean = name != null
+
     fun isAdmin(): Boolean = role == Role.ADMIN
 
     fun addScaleQuestionTermCount() {
@@ -81,15 +83,18 @@ class User(
 
     @JvmInline
     value class SocialProviderId(val value: String) {
+
+        constructor(socialProvider: String, socialId: String) : this("$socialProvider:$socialId")
+
         init {
             require(PROVIDER_ID_PATTERN.matches(value)) { "올바르지 않은 소셜 Provider ID 형식입니다." }
         }
 
         val socialProvider: String
-            get() = value.split("-")[0]
+            get() = value.split(":")[0]
 
         val socialId: String
-            get() = value.split("-")[1]
+            get() = value.split(":")[1]
     }
 
     enum class Gender {
