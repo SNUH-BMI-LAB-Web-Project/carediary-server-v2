@@ -70,6 +70,6 @@ data class UserRegisterRequest(
     @Schema(description = "[환자 정보] 장애 정도 (SEVERE: 심한 장애, NOT_SEVERE: 심하지 않은 장애)", example = "NOT_SEVERE")
     val disabilitySeverity: UserInformation.DisabilitySeverity?,
 
-    @Schema(description = "[환자 정보] 사회복지서비스 (다중 선택)", example = "[\"정신건강복지센터\", \"주간재활시설\"]")
+    @Schema(description = "[환자 정보] 사회복지서비스 (다중 선택)", example = "[\"CAREGIVER_COST\", \"SPECIAL_DIET_PURCHASE\"]")
     val socialWelfareServiceLabels: List<String>?,
 )
