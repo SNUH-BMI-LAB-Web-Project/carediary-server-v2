@@ -44,7 +44,7 @@ class User(
 
     var address: String? = null,
 
-    @Column(name = "primay_diagnosis")
+    @Column(name = "primary_diagnosis")
     var primaryDiagnosis: String? = null,
 
     @Column(name = "scale_question_term_count", nullable = false)
