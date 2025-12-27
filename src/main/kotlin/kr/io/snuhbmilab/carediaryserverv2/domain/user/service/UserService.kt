@@ -16,7 +16,7 @@ class UserService(
     private val userRepository: UserRepository,
 ) {
     fun findOrCreate(email: String, provider: String, socialId: String): User {
-        val socialProviderId = User.SocialProviderId("${provider}-${socialId}")
+        val socialProviderId = User.SocialProviderId(provider, socialId)
 
         return userRepository.findByEmailAndSocialProviderId(email, socialProviderId)
             ?: userRepository.save(
