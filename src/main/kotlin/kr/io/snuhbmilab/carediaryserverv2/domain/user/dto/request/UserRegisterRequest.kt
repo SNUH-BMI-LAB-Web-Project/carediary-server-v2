@@ -27,5 +27,5 @@ data class UserRegisterRequest(
     val disabilityStatus: UserInformation.DisabilityStatus?,
     val disabilityType: String?,
     val disabilitySeverity: UserInformation.DisabilitySeverity?,
-    val socialWelfareServiceLabels: List<String>,
+    val socialWelfareServiceLabels: List<String>?,
 )
