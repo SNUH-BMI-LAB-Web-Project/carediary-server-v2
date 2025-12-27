@@ -24,10 +24,10 @@ import java.util.UUID
 @RequestMapping("/v1/diaries")
 class DiaryController(
     private val diaryFacade: DiaryFacade
-) {
+) : DiaryApi {
 
     @PostMapping
-    fun createDiary(
+    override fun createDiary(
         @UserId userId: UUID,
         @Valid @RequestBody request: DiaryCreateRequest
     ): CommonResponse<DiaryCreateResponse> {
@@ -35,16 +35,16 @@ class DiaryController(
     }
 
     @GetMapping("/me")
-    fun findAllDiariesByMe(
+    override fun findAllDiariesByMe(
         @UserId userId: UUID,
-        @RequestParam(required = false) startDate: LocalDate? = null,
-        @RequestParam(required = false) endDate: LocalDate? = null
+        @RequestParam(required = false) startDate: LocalDate?,
+        @RequestParam(required = false) endDate: LocalDate?
     ): CommonResponse<DiaryFindAllResponse> {
         return CommonResponse.ok(diaryFacade.findAllDiariesByMe(userId, startDate, endDate))
     }
 
     @GetMapping("/{diaryId}")
-    fun findDiaryById(
+    override fun findDiaryById(
         @UserId userId: UUID,
         @PathVariable diaryId: UUID
     ): CommonResponse<DiaryDetailResponse> {
@@ -52,7 +52,7 @@ class DiaryController(
     }
 
     @GetMapping("/dates")
-    fun findDates(
+    override fun findDates(
         @UserId userId: UUID,
         @RequestParam month: YearMonth
     ): CommonResponse<DiaryDatesResponse> {

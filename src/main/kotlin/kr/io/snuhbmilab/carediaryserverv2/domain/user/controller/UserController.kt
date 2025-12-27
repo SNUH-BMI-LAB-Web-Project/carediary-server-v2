@@ -17,15 +17,15 @@ import java.util.UUID
 @RequestMapping("/v1/users")
 class UserController(
     private val userFacade: UserFacade
-) {
+) : UserApi {
 
     @PostMapping("/register")
-    fun register(@UserId userId: UUID, @RequestBody request: UserRegisterRequest): CommonResponse<UserRegisterResponse> {
+    override fun register(@UserId userId: UUID, @RequestBody request: UserRegisterRequest): CommonResponse<UserRegisterResponse> {
         return CommonResponse.ok(userFacade.register(userId, request))
     }
 
     @GetMapping("/me")
-    fun getMe(@UserId userId: UUID): CommonResponse<CurrentUserResponse> {
+    override fun getMe(@UserId userId: UUID): CommonResponse<CurrentUserResponse> {
         return CommonResponse.ok(userFacade.getMe(userId))
     }
 }

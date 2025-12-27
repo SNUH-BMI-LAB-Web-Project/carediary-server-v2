@@ -16,10 +16,10 @@ import java.util.UUID
 @RestController
 class ScaleQuestionController(
     private val scaleQuestionFacade: ScaleQuestionFacade,
-) {
+) : ScaleQuestionApi {
 
     @PostMapping("/v1/users/scale-questions")
-    fun registerUserScaleQuestionResult(
+    override fun registerUserScaleQuestionResult(
         @UserId userId: UUID,
         @Valid @RequestBody request: ScaleQuestionUserAnswerRegisterRequest
     ): CommonResponse<Unit> {
@@ -28,12 +28,12 @@ class ScaleQuestionController(
     }
 
     @GetMapping("/v1/scale-questions")
-    fun findAllScaleQuestions(): CommonResponse<ScaleQuestionFindAllResponse> {
+    override fun findAllScaleQuestions(): CommonResponse<ScaleQuestionFindAllResponse> {
         return CommonResponse.ok(scaleQuestionFacade.findAllScaleQuestions())
     }
 
     @GetMapping("/v1/users/scales")
-    fun findAllUserScales(
+    override fun findAllUserScales(
         @UserId userId: UUID
     ) : CommonResponse<UserScaleFindAllResponse> {
         return CommonResponse.ok(scaleQuestionFacade.findAllUserScales(userId))
