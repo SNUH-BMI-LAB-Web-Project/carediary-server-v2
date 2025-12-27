@@ -15,6 +15,7 @@ import java.util.UUID
 class UserService(
     private val userRepository: UserRepository,
 ) {
+    @Transactional
     fun findOrCreate(email: String, provider: String, socialId: String): User {
         val socialProviderId = User.SocialProviderId(provider, socialId)
 
