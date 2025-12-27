@@ -5,7 +5,6 @@ import jakarta.servlet.http.HttpServletResponse
 import kr.io.snuhbmilab.carediaryserverv2.auth.exception.OAuth2Exception
 import kr.io.snuhbmilab.carediaryserverv2.auth.jwt.service.JwtProvider
 import kr.io.snuhbmilab.carediaryserverv2.auth.oauth2.OAuth2Authentication
-import kr.io.snuhbmilab.carediaryserverv2.domain.scalequestion.service.ScaleQuestionService
 import kr.io.snuhbmilab.carediaryserverv2.domain.user.service.UserService
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.core.Authentication
@@ -21,8 +20,6 @@ class OAuth2AuthenticationSuccessHandler(
     private var oAuth2RedirectUri: String = "",
 
     private val userService: UserService,
-
-    private val scaleQuestionService: ScaleQuestionService
 ) : SimpleUrlAuthenticationSuccessHandler() {
 
     override fun onAuthenticationSuccess(
@@ -51,15 +48,6 @@ class OAuth2AuthenticationSuccessHandler(
 
         val user = userService.findOrCreate(email, provider.registrationId, socialId)
 
-        if (user.isRegistered() && !user.isAdmin() && scaleQuestionService.needsScaleQuestion(user, 0)) {
-            redirectStrategy.sendRedirect(
-                request,
-                response,
-                redirectUri(oAuth2RedirectUri, CallbackType.NEED_SCALE_QUESTION)
-            )
-            return
-        }
-
         val callbackType = if (!user.isRegistered()) CallbackType.NEW else CallbackType.SUCCESS
         val accessToken = jwtProvider.generateToken(user)
 
@@ -86,6 +74,6 @@ class OAuth2AuthenticationSuccessHandler(
     }
 
     enum class CallbackType {
-        SUCCESS, DUPLICATE_EMAIL, NEW, NEED_SCALE_QUESTION
+        SUCCESS, DUPLICATE_EMAIL, NEW
     }
 }
