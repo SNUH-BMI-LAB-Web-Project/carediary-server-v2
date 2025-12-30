@@ -36,6 +36,7 @@ class JwtProvider(
             Date(now.time + jwtProperties.expiresIn.toMillis()),
             user.id.toString(),
             mapOf(
+                Pair("email", user.email),
                 Pair("name", user.name),
                 Pair("role", user.role.name),
             )
