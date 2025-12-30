@@ -44,7 +44,6 @@ dependencies {
     implementation("io.github.oshai:kotlin-logging-jvm:7.0.3")
     runtimeOnly("com.h2database:h2")
     runtimeOnly("com.mysql:mysql-connector-j")
-    annotationProcessor("org.projectlombok:lombok")
     testImplementation("org.springframework.boot:spring-boot-starter-data-jpa-test")
     testImplementation("org.springframework.boot:spring-boot-starter-mail-test")
     testImplementation("org.springframework.boot:spring-boot-starter-security-oauth2-client-test")
