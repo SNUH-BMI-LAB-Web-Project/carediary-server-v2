@@ -48,12 +48,18 @@ class DiaryFacade(
         }
 
         //외부 LLM 연동한 요약문 생성 API 호출
-        val modelSummaryRequest = GenerateSummaryRequest.of(
-            diary,
-            request.questionScores.map { it.questionText to it.score }
-        )
-        val modelSummaryResponse = modelClient.generateSummary(modelSummaryRequest)
-        val summary = modelSummaryResponse.body?.summary ?: "요약 없음"
+        val summary = try {
+            val modelSummaryRequest = GenerateSummaryRequest.of(
+                diary,
+                request.questionScores.map { it.questionText to it.score }
+            )
+            val modelSummaryResponse = modelClient.generateSummary(modelSummaryRequest)
+
+            modelSummaryResponse.body?.summary ?: "요약 없음"
+        } catch (e: Exception) {
+            logger.warn(e) { "일기 요약 생성 실패 [diaryId=${diary.id}]: ${e.message}" }
+            "요약 없음"
+        }
 
         return DiaryCreateResponse(summary)
     }
