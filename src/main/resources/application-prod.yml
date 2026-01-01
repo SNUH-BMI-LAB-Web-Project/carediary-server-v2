@@ -89,6 +89,5 @@ service:
   oauth2:
     redirect-uri: ${SERVICE_OAUTH2_REDIRECT_URI}
 
-#external:
-#  api-url:
-#    model: ${EXTERNAL_API_URL_MODEL}
+external-api:
+  model-uri: ${EXTERNAL_API_MODEL_URI}
