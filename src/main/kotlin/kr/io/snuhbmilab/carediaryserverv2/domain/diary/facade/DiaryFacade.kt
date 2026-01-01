@@ -1,6 +1,5 @@
 package kr.io.snuhbmilab.carediaryserverv2.domain.diary.facade
 
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import io.github.oshai.kotlinlogging.KotlinLogging
 import kr.io.snuhbmilab.carediaryserverv2.common.exception.BusinessException
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.dto.request.DiaryCreateRequest
@@ -15,7 +14,6 @@ import kr.io.snuhbmilab.carediaryserverv2.domain.diary.service.DiaryService
 import kr.io.snuhbmilab.carediaryserverv2.domain.user.entity.User
 import kr.io.snuhbmilab.carediaryserverv2.domain.user.service.UserService
 import kr.io.snuhbmilab.carediaryserverv2.external.model.ModelClient
-import kr.io.snuhbmilab.carediaryserverv2.external.model.ModelRestClient
 import kr.io.snuhbmilab.carediaryserverv2.external.model.dto.GenerateSummaryRequest
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
