@@ -16,21 +16,21 @@ class AdminDiaryFacade(
     private val diaryService: DiaryService
 ) {
     fun findSdoh(diaryId: UUID): AdminDiarySdohResponse {
-        diaryService.findById(diaryId)
+        diaryService.validateExists(diaryId)
         val pieList = diaryAnalysisResultService.findAllPie(diaryId)
 
         return AdminDiarySdohResponse.from(pieList)
     }
 
     fun findExtractedKeywords(diaryId: UUID): AdminDiaryKeywordResponse {
-        diaryService.findById(diaryId)
+        diaryService.validateExists(diaryId)
         val keywords = diaryAnalysisResultService.findAllKeywordExtractions(diaryId)
 
         return AdminDiaryKeywordResponse.of(diaryId, keywords)
     }
 
     fun findWelfareServices(diaryId: UUID): AdminDiaryWelfareServiceResponse {
-        diaryService.findById(diaryId)
+        diaryService.validateExists(diaryId)
         val welfareServices = diaryAnalysisResultService.findAllWelfareServices(diaryId)
 
         return AdminDiaryWelfareServiceResponse.of(diaryId, welfareServices)
