@@ -7,5 +7,7 @@ import java.util.UUID
 interface UserScaleRepository : JpaRepository<UserScale, Long> {
     fun findAllByUserId(userId: UUID): List<UserScale>
 
+    fun findAllByUserIdAndTermCount(userId: UUID, termCount: Int): List<UserScale>
+
     fun existsByUserIdAndTermCount(userId: UUID, termCount: Int): Boolean
 }
