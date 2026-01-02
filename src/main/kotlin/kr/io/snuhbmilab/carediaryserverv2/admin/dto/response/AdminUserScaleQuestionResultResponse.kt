@@ -49,7 +49,7 @@ data class AdminUserScaleQuestionResultResponse(
                 items = userAnswerMap.map { (scaleCategory, userAnswers) ->
                     scaleCategory to ScaleQuestionResultDto.from(
                         scaleCategory,
-                        userScales.first { it.scaleCategory == scaleCategory }.score,
+                        userScales.firstOrNull { it.scaleCategory == scaleCategory }?.score ?: 0,
                         userAnswers
                     )
                 }.toMap()
