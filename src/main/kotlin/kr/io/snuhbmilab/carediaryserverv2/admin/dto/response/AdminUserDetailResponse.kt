@@ -13,7 +13,8 @@ data class AdminUserDetailResponse(
     val diaryDates: List<LocalDate>,
     val monthlyDiaryCount: Int,
     val yearlyDiaryCount: Int,
-    val emotionCounts: Map<Diary.Emotion, Int>
+    val emotionCounts: Map<Diary.Emotion, Int>,
+    val riskReason: String?,
 ) {
     companion object {
         @JvmStatic
@@ -22,7 +23,8 @@ data class AdminUserDetailResponse(
             diaryDates: List<LocalDate>,
             monthlyDiaryCount: Int,
             yearlyDiaryCount: Int,
-            emotionCounts: Map<Diary.Emotion, Int>
+            emotionCounts: Map<Diary.Emotion, Int>,
+            riskReason: String? = null
         ) = AdminUserDetailResponse(
             user.id!!,
             user.name!!,
@@ -31,7 +33,8 @@ data class AdminUserDetailResponse(
             diaryDates,
             monthlyDiaryCount,
             yearlyDiaryCount,
-            emotionCounts
+            emotionCounts,
+            riskReason
         )
     }
 }

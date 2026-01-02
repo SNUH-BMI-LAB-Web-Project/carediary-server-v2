@@ -39,4 +39,6 @@ class UserService(
         user.firstDiaryDate = date
         user.termCount = 1
     }
+
+    fun findAllRegistered(): List<User> = userRepository.findAllByNameIsNotNull()
 }

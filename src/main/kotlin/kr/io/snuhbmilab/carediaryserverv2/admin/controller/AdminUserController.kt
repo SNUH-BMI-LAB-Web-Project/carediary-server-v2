@@ -1,6 +1,7 @@
 package kr.io.snuhbmilab.carediaryserverv2.admin.controller
 
 import kr.io.snuhbmilab.carediaryserverv2.admin.dto.response.AdminUserDetailResponse
+import kr.io.snuhbmilab.carediaryserverv2.admin.dto.response.AdminUserFindAllResponse
 import kr.io.snuhbmilab.carediaryserverv2.admin.dto.response.AdminUserScaleFindAllResponse
 import kr.io.snuhbmilab.carediaryserverv2.admin.dto.response.AdminUserScaleQuestionResultResponse
 import kr.io.snuhbmilab.carediaryserverv2.admin.facade.AdminUserFacade
@@ -17,6 +18,10 @@ import java.util.UUID
 class AdminUserController(
     private val adminUserFacade: AdminUserFacade
 ) {
+    @GetMapping
+    fun findAllUsers(): CommonResponse<AdminUserFindAllResponse> {
+        return CommonResponse.ok(adminUserFacade.findAllUsers())
+    }
 
     @GetMapping("/{userId}")
     fun findUserById(@PathVariable userId: UUID): CommonResponse<AdminUserDetailResponse> {
