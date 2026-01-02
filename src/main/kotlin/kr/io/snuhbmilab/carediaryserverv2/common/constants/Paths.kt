@@ -9,4 +9,4 @@ val WHITELIST_ENDPOINTS = arrayOf(
     "/v1/users/test/token"
 )
 
-const val ADMIN_ENDPOINT = "/admin/**"
+const val ADMIN_ENDPOINT = "/v1/admin/**"
