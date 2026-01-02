@@ -53,13 +53,13 @@ class UserRiskEvaluator(
         val isAtRisk = riskReasons.isNotEmpty()
         val description = RiskReason.composeDescription(riskReasons)
 
-        if (userRiskEvaluationRepository.existsByUserIdAndRiskReasonAndIsAtRiskIsTrue(userId, description)) {
-            logger.info { "동일 내용의 위험군 판별 기록이 이미 존재합니다. userId=$userId, description=$description" }
-            return
-        }
-
         // 4. UserRiskEvaluation 저장
         if (isAtRisk) {
+            if (userRiskEvaluationRepository.existsByUserIdAndRiskReasonAndIsAtRiskIsTrue(userId, description)) {
+                logger.info { "동일 내용의 위험군 판별 기록이 이미 존재합니다. userId=$userId, description=$description" }
+                return
+            }
+
             val evaluation = UserRiskEvaluation(
                 userId = userId,
                 riskReason = description,
