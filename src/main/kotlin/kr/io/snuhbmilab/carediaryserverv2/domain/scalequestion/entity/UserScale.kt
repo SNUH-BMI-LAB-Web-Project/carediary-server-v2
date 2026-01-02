@@ -11,6 +11,7 @@ import jakarta.persistence.Id
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
+import kr.io.snuhbmilab.carediaryserverv2.common.entity.BaseTimeEntity
 import kr.io.snuhbmilab.carediaryserverv2.domain.scalequestion.constants.ScaleCategory
 import kr.io.snuhbmilab.carediaryserverv2.domain.user.entity.User
 
@@ -34,4 +35,4 @@ class UserScale(
 
     @Column(nullable = false)
     val score: Int,
-)
+) : BaseTimeEntity()

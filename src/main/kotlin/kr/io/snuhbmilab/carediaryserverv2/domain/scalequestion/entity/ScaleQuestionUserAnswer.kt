@@ -12,6 +12,7 @@ import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
 import jakarta.persistence.UniqueConstraint
 import kr.io.snuhbmilab.carediaryserverv2.domain.user.entity.User
+import java.util.UUID
 
 @Entity
 @Table(
@@ -29,9 +30,12 @@ class ScaleQuestionUserAnswer(
     @Column(name = "squa_id", nullable = false)
     val id: Long? = null,
 
+    @Column(name = "user_id", nullable = false)
+    val userId: UUID,
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    val user: User,
+    @JoinColumn(name = "user_id", updatable = false, insertable = false)
+    val user: User? = null,
 
     @Column(name = "scale_question_id", nullable = false)
     val scaleQuestionId: Long,

@@ -27,6 +27,11 @@ class DiaryService(
             )
         )
 
+    fun validateExists(diaryId: UUID) {
+        diaryRepository.findByIdOrNull(diaryId)
+            ?: throw BusinessException(DiaryErrorCode.DIARY_NOT_FOUND)
+    }
+
     fun findAllByUserAndPeriod(user: User, startDate: LocalDate?, endDate: LocalDate?): List<Diary> {
         if (startDate == null && endDate == null) {
             return diaryRepository.findAllByUploaderOrderByDateDesc(user)
@@ -69,7 +74,11 @@ class DiaryService(
 
     fun findDatesMonthly(userId: UUID, yearMonth: YearMonth): List<LocalDate> {
         val dateRange = yearMonth.toDateRange()
-        return diaryRepository.findDistinctDatesByUploaderIdAndDateBetween(userId, dateRange.start, dateRange.endInclusive)
+        return diaryRepository.findDistinctDatesByUploaderIdAndDateBetween(
+            userId,
+            dateRange.start,
+            dateRange.endInclusive
+        )
     }
 
     fun isFirstDiaryEntry(userId: UUID): Boolean {

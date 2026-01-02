@@ -8,4 +8,5 @@ interface UserRepository : JpaRepository<User, UUID> {
     fun findByEmail(email: String): User?
     fun findAllByFirstDiaryDateIsNotNullAndTermCountGreaterThan(minTermCount: Int): List<User>
     fun findByEmailAndSocialProviderId(email: String, socialProviderId: User.SocialProviderId): User?
+    fun findAllByNameIsNotNull(): List<User>
 }

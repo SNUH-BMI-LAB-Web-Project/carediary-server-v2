@@ -21,4 +21,6 @@ class UserScaleService(
     )
 
     fun findAll(user: User): List<UserScale> = userScaleRepository.findAllByUserId(user.id!!)
+
+    fun findAllByTermCount(user: User, count: Int): List<UserScale> = userScaleRepository.findAllByUserIdAndTermCount(user.id!!, count)
 }
