@@ -15,19 +15,19 @@ import java.util.UUID
 @RequestMapping("/v1/admin/diaries")
 class AdminDiaryController(
     private val adminDiaryFacade: AdminDiaryFacade
-) {
+) : AdminDiaryApi {
     @GetMapping("/{diaryId}/sdoh")
-    fun findSdoh(@PathVariable diaryId: UUID): CommonResponse<AdminDiarySdohResponse> {
+    override fun findSdoh(@PathVariable diaryId: UUID): CommonResponse<AdminDiarySdohResponse> {
         return CommonResponse.ok(adminDiaryFacade.findSdoh(diaryId))
     }
 
     @GetMapping("/{diaryId}/keywords")
-    fun findExtractedKeywords(@PathVariable diaryId: UUID): CommonResponse<AdminDiaryKeywordResponse> {
+    override fun findExtractedKeywords(@PathVariable diaryId: UUID): CommonResponse<AdminDiaryKeywordResponse> {
         return CommonResponse.ok(adminDiaryFacade.findExtractedKeywords(diaryId))
     }
 
     @GetMapping("/{diaryId}/welfare-services")
-    fun findWelfareServices(@PathVariable diaryId: UUID): CommonResponse<AdminDiaryWelfareServiceResponse> {
+    override fun findWelfareServices(@PathVariable diaryId: UUID): CommonResponse<AdminDiaryWelfareServiceResponse> {
         return CommonResponse.ok(adminDiaryFacade.findWelfareServices(diaryId))
     }
 }

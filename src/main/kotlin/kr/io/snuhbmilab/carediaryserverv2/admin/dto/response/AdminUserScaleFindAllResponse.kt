@@ -5,24 +5,24 @@ import kr.io.snuhbmilab.carediaryserverv2.domain.scalequestion.constants.ScaleCa
 import kr.io.snuhbmilab.carediaryserverv2.domain.scalequestion.entity.UserScale
 import java.time.LocalDateTime
 
-@Schema(description = "사용자 척도 결과 조회 응답")
+@Schema(description = "관리자 사용자 척도 결과 조회 응답")
 data class AdminUserScaleFindAllResponse(
     @Schema(
         description = "회차별 척도 결과 (키: 회차 번호, 값: 해당 회차의 척도 점수 목록)",
-        example = "{\"0\": [{\"scaleCategory\": \"ANXIETY\", \"score\": 12}, {\"scaleCategory\": \"DEPRESSION\", \"score\": 8}]}"
+        example = "{\"1\": [{\"scaleCategory\": \"ANXIETY\", \"score\": 12, \"createdAt\": \"2024-01-15T10:30:00\"}, {\"scaleCategory\": \"DEPRESSION\", \"score\": 8, \"createdAt\": \"2024-01-15T10:30:00\"}], \"2\": [{\"scaleCategory\": \"ANXIETY\", \"score\": 10, \"createdAt\": \"2024-02-15T10:30:00\"}]}"
     )
     val items: Map<String, List<UserScaleItem>>
 ) {
 
     @Schema(description = "사용자 척도 점수 항목")
     data class UserScaleItem(
-        @Schema(description = "척도 카테고리 (ANXIETY, DEPRESSION, ANGER)", example = "ANXIETY")
+        @Schema(description = "척도 카테고리 (ANXIETY: 불안, DEPRESSION: 우울, ANGER: 분노)", example = "ANXIETY")
         val scaleCategory: ScaleCategory,
 
         @Schema(description = "척도 점수", example = "12")
         val score: Int,
 
-        @Schema(description = "척도 점수 생성일")
+        @Schema(description = "척도 점수 생성일시")
         val createdAt: LocalDateTime
     ) {
         companion object {

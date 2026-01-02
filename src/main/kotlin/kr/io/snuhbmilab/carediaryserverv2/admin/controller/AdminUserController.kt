@@ -17,24 +17,24 @@ import java.util.UUID
 @RequestMapping("/v1/admin/users")
 class AdminUserController(
     private val adminUserFacade: AdminUserFacade
-) {
+) : AdminUserApi {
     @GetMapping
-    fun findAllUsers(): CommonResponse<AdminUserFindAllResponse> {
+    override fun findAllUsers(): CommonResponse<AdminUserFindAllResponse> {
         return CommonResponse.ok(adminUserFacade.findAllUsers())
     }
 
     @GetMapping("/{userId}")
-    fun findUserById(@PathVariable userId: UUID): CommonResponse<AdminUserDetailResponse> {
+    override fun findUserById(@PathVariable userId: UUID): CommonResponse<AdminUserDetailResponse> {
         return CommonResponse.ok(adminUserFacade.findUserById(userId))
     }
 
     @GetMapping("/{userId}/scales")
-    fun findUserScales(@PathVariable userId: UUID): CommonResponse<AdminUserScaleFindAllResponse> {
+    override fun findUserScales(@PathVariable userId: UUID): CommonResponse<AdminUserScaleFindAllResponse> {
         return CommonResponse.ok(adminUserFacade.findUserScales(userId))
     }
 
     @GetMapping("/{userId}/scale-questions")
-    fun findScaleQuestionResult(@PathVariable userId: UUID, @RequestParam count: Int): CommonResponse<AdminUserScaleQuestionResultResponse> {
+    override fun findScaleQuestionResult(@PathVariable userId: UUID, @RequestParam count: Int): CommonResponse<AdminUserScaleQuestionResultResponse> {
         return CommonResponse.ok(adminUserFacade.findScaleQuestionResult(userId, count))
     }
 }
