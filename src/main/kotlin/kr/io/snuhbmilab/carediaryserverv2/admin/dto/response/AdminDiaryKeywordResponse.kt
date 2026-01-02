@@ -26,7 +26,7 @@ data class AdminDiaryKeywordResponse(
         @Schema(description = "키워드 추출 ID", example = "1")
         val keywordExtractionId: Long,
 
-        @Schema(description = "키워드 그룹 (LIFE_CYCLE: 생애주기, HOUSEHOLD_STATUS: 가구상황, INTEREST: 관심사)", example = "LIFE_CYCLE")
+        @Schema(description = "키워드 그룹 (LIFE_CYCLE: 생애주기, HOUSEHOLD_STATUS: 가구상황, INTERESTS: 관심사)", example = "LIFE_CYCLE")
         val keywordGroup: DiaryKeywordExtraction.KeywordGroup,
 
         @Schema(description = "키워드", example = "청년")
