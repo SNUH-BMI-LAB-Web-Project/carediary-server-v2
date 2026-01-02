@@ -6,6 +6,6 @@ import java.util.UUID
 
 interface PieRepository : JpaRepository<Pie, Long> {
     fun findAllByDiaryId(diaryId: UUID): List<Pie>
-
     fun findAllByDiaryUploaderId(userId: UUID): List<Pie>
+    fun existsByDiaryUploaderIdAndSeverityGreaterThanEqual(uploaderId: UUID, severity: Int): Boolean
 }

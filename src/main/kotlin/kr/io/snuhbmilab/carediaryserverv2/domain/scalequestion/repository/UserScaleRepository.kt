@@ -10,4 +10,6 @@ interface UserScaleRepository : JpaRepository<UserScale, Long> {
     fun findAllByUserIdAndTermCount(userId: UUID, termCount: Int): List<UserScale>
 
     fun existsByUserIdAndTermCount(userId: UUID, termCount: Int): Boolean
+
+    fun existsByUserIdAndTermCountAndScoreGreaterThanEqual(userId: UUID, termCount: Int, score: Int): Boolean
 }

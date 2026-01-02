@@ -31,20 +31,14 @@ class UserRiskEvaluator(
         val riskReasons = mutableListOf<RiskReason>()
 
         // 1. Pie 심각도 체크 (severity >= 4)
-        val userPies = pieRepository.findAllByDiaryUploaderId(userId)
-        val hasHighSeverityPie = userPies.any { pie ->
-            pie.severity != null && pie.severity!! >= SEVERITY_THRESHOLD
-        }
+        val hasHighSeverityPie = pieRepository.existsByDiaryUploaderIdAndSeverityGreaterThanEqual(userId, SEVERITY_THRESHOLD)
         if (hasHighSeverityPie) {
             riskReasons.add(RiskReason.HIGH_PIE_SEVERITY)
         }
 
         // 2. UserScale 점수 체크 (score >= 20, 현재 termCount 기준)
         val currentTermCount = user.termCount
-        val userScales = userScaleRepository.findAllByUserIdAndTermCount(userId, currentTermCount)
-        val hasHighScaleScore = userScales.any { scale ->
-            scale.score >= SCORE_THRESHOLD
-        }
+        val hasHighScaleScore = userScaleRepository.existsByUserIdAndTermCountAndScoreGreaterThanEqual(userId, currentTermCount, SCORE_THRESHOLD)
         if (hasHighScaleScore) {
             riskReasons.add(RiskReason.HIGH_SCALE_SCORE)
         }
