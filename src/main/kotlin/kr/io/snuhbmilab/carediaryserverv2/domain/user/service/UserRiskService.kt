@@ -6,9 +6,9 @@ import java.util.UUID
 
 @Service
 class UserRiskService(
-    private val userRickEvaluationRepository: UserRiskEvaluationRepository
+    private val userRiskEvaluationRepository: UserRiskEvaluationRepository
 ) {
-    fun findAllByUserIds(userIds: List<UUID>) = userRickEvaluationRepository.findAllByIsAtRiskIsTrueAndUserIdIn(userIds)
+    fun findAllByUserIds(userIds: List<UUID>) = userRiskEvaluationRepository.findAllByIsAtRiskIsTrueAndUserIdIn(userIds)
 
-    fun findCurrentRisk(userId: UUID) = userRickEvaluationRepository.findFirstByUserIdAndIsAtRiskIsTrueOrderByCreatedAtDesc(userId)
+    fun findCurrentRisk(userId: UUID) = userRiskEvaluationRepository.findFirstByUserIdAndIsAtRiskIsTrueOrderByCreatedAtDesc(userId)
 }
