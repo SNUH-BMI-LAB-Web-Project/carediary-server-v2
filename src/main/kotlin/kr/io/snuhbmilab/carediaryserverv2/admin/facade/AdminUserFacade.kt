@@ -7,7 +7,6 @@ import kr.io.snuhbmilab.carediaryserverv2.admin.dto.response.AdminUserScaleQuest
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.service.DiaryService
 import kr.io.snuhbmilab.carediaryserverv2.domain.scalequestion.service.ScaleQuestionService
 import kr.io.snuhbmilab.carediaryserverv2.domain.scalequestion.service.UserScaleService
-import kr.io.snuhbmilab.carediaryserverv2.domain.user.repository.UserRiskEvaluationRepository
 import kr.io.snuhbmilab.carediaryserverv2.domain.user.service.UserRiskService
 import kr.io.snuhbmilab.carediaryserverv2.domain.user.service.UserService
 import org.springframework.stereotype.Service
