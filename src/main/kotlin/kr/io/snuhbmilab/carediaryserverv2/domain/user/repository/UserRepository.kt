@@ -14,4 +14,11 @@ interface UserRepository : JpaRepository<User, UUID> {
 
     @Query("SELECT COUNT(u) FROM User u WHERE u.createdAt >= :startDateTime")
     fun countByCreatedAtAfter(startDateTime: LocalDateTime): Long
+
+    @Query("""
+        SELECT u FROM User u
+        WHERE u.name IS NOT NULL
+        AND (CAST(u.id AS string) LIKE CONCAT('%', :search, '%') OR LOWER(u.name) LIKE LOWER(CONCAT('%', :search, '%')))
+    """)
+    fun searchByIdOrName(search: String): List<User>
 }

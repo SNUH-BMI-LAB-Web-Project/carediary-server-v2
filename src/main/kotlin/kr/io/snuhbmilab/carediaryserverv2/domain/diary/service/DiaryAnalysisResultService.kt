@@ -24,4 +24,12 @@ class DiaryAnalysisResultService(
 
     fun countByCreatedAtAfter(startDateTime: LocalDateTime): Long =
         diaryAnalysisResultRepository.countByCreatedAtAfter(startDateTime)
+
+    fun countByUserId(userId: UUID): Long = diaryAnalysisResultRepository.countByUploaderId(userId)
+
+    fun countByUserIds(userIds: List<UUID>): Map<UUID, Long> {
+        if (userIds.isEmpty()) return emptyMap()
+        return diaryAnalysisResultRepository.countByUploaderIdIn(userIds)
+            .associate { it.uploaderId to it.count }
+    }
 }

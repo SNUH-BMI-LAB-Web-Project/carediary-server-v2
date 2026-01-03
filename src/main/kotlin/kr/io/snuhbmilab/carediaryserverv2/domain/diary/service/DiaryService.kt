@@ -84,4 +84,12 @@ class DiaryService(
     fun isFirstDiaryEntry(userId: UUID): Boolean {
         return !diaryRepository.existsByUploaderId(userId)
     }
+
+    fun countByUserId(userId: UUID): Long = diaryRepository.countByUploaderId(userId)
+
+    fun countByUserIds(userIds: List<UUID>): Map<UUID, Long> {
+        if (userIds.isEmpty()) return emptyMap()
+        return diaryRepository.countByUploaderIdIn(userIds)
+            .associate { it.uploaderId to it.count }
+    }
 }

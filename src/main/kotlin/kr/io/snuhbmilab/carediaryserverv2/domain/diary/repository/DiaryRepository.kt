@@ -1,6 +1,7 @@
 package kr.io.snuhbmilab.carediaryserverv2.domain.diary.repository
 
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.dto.query.EmotionCountQueryResult
+import kr.io.snuhbmilab.carediaryserverv2.domain.diary.dto.query.UserCountQueryResult
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.entity.Diary
 import kr.io.snuhbmilab.carediaryserverv2.domain.user.entity.User
 import org.springframework.data.jpa.repository.JpaRepository
@@ -43,4 +44,14 @@ interface DiaryRepository : JpaRepository<Diary, UUID> {
     ): List<LocalDate>
 
     fun existsByUploaderId(userId: UUID): Boolean
+
+    fun countByUploaderId(uploaderId: UUID): Long
+
+    @Query("""
+        SELECT d.uploader.id as uploaderId, COUNT(d) as count
+        FROM Diary d
+        WHERE d.uploader.id IN :uploaderIds
+        GROUP BY d.uploader.id
+    """)
+    fun countByUploaderIdIn(uploaderIds: List<UUID>): List<UserCountQueryResult>
 }
