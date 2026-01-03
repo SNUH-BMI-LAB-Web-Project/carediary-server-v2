@@ -18,7 +18,7 @@ interface UserRepository : JpaRepository<User, UUID> {
     @Query("""
         SELECT u FROM User u
         WHERE u.name IS NOT NULL
-        AND (CAST(u.id AS string) LIKE CONCAT('%', :search, '%') OR LOWER(u.name) LIKE LOWER(CONCAT('%', :search, '%')))
+        AND LOWER(u.name) LIKE LOWER(CONCAT('%', :search, '%'))
     """)
-    fun searchByIdOrName(search: String): List<User>
+    fun searchByName(search: String): List<User>
 }

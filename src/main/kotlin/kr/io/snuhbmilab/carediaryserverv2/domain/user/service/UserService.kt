@@ -48,7 +48,7 @@ class UserService(
     fun countByCreatedAtAfter(startDateTime: LocalDateTime): Long =
         userRepository.countByCreatedAtAfter(startDateTime)
 
-    fun searchByIdOrName(search: String?): List<User> =
+    fun searchByName(search: String?): List<User> =
         if (search.isNullOrBlank()) findAllRegistered()
-        else userRepository.searchByIdOrName(search)
+        else userRepository.searchByName(search)
 }

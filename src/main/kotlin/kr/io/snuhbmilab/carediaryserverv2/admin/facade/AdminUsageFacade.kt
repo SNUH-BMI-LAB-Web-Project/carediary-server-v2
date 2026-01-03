@@ -34,7 +34,7 @@ class AdminUsageFacade(
     }
 
     fun getUserUsages(search: String?): AdminUserUsageResponse {
-        val users = userService.searchByIdOrName(search)
+        val users = userService.searchByName(search)
         val userIds = users.mapNotNull { it.id }
 
         val diaryCountMap = diaryService.countByUserIds(userIds)

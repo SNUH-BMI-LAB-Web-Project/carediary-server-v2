@@ -30,7 +30,7 @@ interface AdminUsageApi {
 
     @Operation(
         summary = "사용자별 사용량 조회",
-        description = "사용자별 일기 작성 건수와 분석 건수를 조회합니다. 사용자 ID 또는 이름으로 검색할 수 있습니다."
+        description = "사용자별 일기 작성 건수와 분석 건수를 조회합니다. 사용자 이름으로 검색할 수 있습니다."
     )
     @ApiResponses(
         value = [
@@ -40,7 +40,7 @@ interface AdminUsageApi {
         ]
     )
     fun getUserUsages(
-        @Parameter(description = "사용자 ID 또는 이름 검색", required = false)
+        @Parameter(description = "사용자 이름 검색", required = false)
         @RequestParam(required = false) search: String?
     ): CommonResponse<AdminUserUsageResponse>
 }
