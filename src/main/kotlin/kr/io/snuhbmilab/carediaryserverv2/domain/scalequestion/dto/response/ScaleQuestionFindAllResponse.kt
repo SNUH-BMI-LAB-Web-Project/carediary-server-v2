@@ -21,7 +21,7 @@ data class ScaleQuestionFindAllResponse(
         @Schema(description = "질문 내용", example = "지난 일주일 동안 긴장되거나 불안했다")
         val content: String,
 
-        @Schema(description = "척도 카테고리 (ANXIETY, DEPRESSION, ANGER)", example = "ANXIETY")
+        @Schema(description = "척도 카테고리 (ANXIETY_DEPRESSION, ANGER)", example = "ANXIETY_DEPRESSION")
         val scaleCategory: ScaleCategory,
 
         @Schema(description = "선택지 개수", example = "5")
