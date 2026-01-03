@@ -27,6 +27,10 @@ Repository (Spring Data JPA)
 Entity
 ```
 
+각 레이어에서는 바로 아래 레이어만 참조할 수 있다.
+레이어 구조를 지켜서 구현해야 한다.
+예) Facade는 Service 레이어만 참조 가능
+
 ## 디렉토리 구조
 
 ```
