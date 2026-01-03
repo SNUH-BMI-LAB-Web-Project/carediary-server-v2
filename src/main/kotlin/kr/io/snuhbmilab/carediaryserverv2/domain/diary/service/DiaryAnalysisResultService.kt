@@ -23,7 +23,7 @@ class DiaryAnalysisResultService(
     fun countAll(): Long = diaryAnalysisResultRepository.count()
 
     fun countByCreatedAtAfter(startDateTime: LocalDateTime): Long =
-        diaryAnalysisResultRepository.countByCreatedAtAfter(startDateTime)
+        diaryAnalysisResultRepository.countByCreatedAtAfterOrEqual(startDateTime)
 
     fun countByUserId(userId: UUID): Long = diaryAnalysisResultRepository.countByUploaderId(userId)
 

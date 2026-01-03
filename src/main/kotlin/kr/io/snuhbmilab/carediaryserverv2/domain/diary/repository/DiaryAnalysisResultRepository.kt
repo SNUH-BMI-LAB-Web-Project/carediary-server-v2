@@ -9,7 +9,7 @@ import java.util.UUID
 
 interface DiaryAnalysisResultRepository : JpaRepository<DiaryAnalysisResult, Long> {
     @Query("SELECT COUNT(dar) FROM DiaryAnalysisResult dar WHERE dar.createdAt >= :startDateTime")
-    fun countByCreatedAtAfter(startDateTime: LocalDateTime): Long
+    fun countByCreatedAtAfterOrEqual(startDateTime: LocalDateTime): Long
 
     @Query("SELECT COUNT(dar) FROM DiaryAnalysisResult dar WHERE dar.diary.uploader.id = :uploaderId")
     fun countByUploaderId(uploaderId: UUID): Long
