@@ -33,7 +33,6 @@ class LoggingFilter : OncePerRequestFilter() {
         get() {
             val xfHeader = getHeader("X-Forwarded-For")
 
-            return if (xfHeader == null) remoteAddr else xfHeader.split(",".toRegex())
-                .dropLastWhile { it.isEmpty() }.toTypedArray()[0]
+            return xfHeader?.split(",")?.firstOrNull()?.trim() ?: remoteAddr
         }
 }
