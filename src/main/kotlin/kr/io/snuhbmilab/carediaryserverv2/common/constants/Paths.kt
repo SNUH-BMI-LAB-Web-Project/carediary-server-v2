@@ -10,3 +10,5 @@ val WHITELIST_ENDPOINTS = arrayOf(
 )
 
 const val ADMIN_ENDPOINT = "/v1/admin/**"
+
+val LOG_EXCLUDED_ENDPOINTS = arrayOf("/favicon.ico")

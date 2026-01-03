@@ -9,14 +9,14 @@ import java.time.LocalDateTime
 data class AdminUserScaleFindAllResponse(
     @Schema(
         description = "회차별 척도 결과 (키: 회차 번호, 값: 해당 회차의 척도 점수 목록)",
-        example = "{\"1\": [{\"scaleCategory\": \"ANXIETY\", \"score\": 12, \"createdAt\": \"2024-01-15T10:30:00\"}, {\"scaleCategory\": \"DEPRESSION\", \"score\": 8, \"createdAt\": \"2024-01-15T10:30:00\"}], \"2\": [{\"scaleCategory\": \"ANXIETY\", \"score\": 10, \"createdAt\": \"2024-02-15T10:30:00\"}]}"
+        example = "{\"1\": [{\"scaleCategory\": \"ANXIETY_DEPRESSION\", \"score\": 8, \"createdAt\": \"2024-01-15T10:30:00\"}], \"2\": [{\"scaleCategory\": \"ANGER\", \"score\": 10, \"createdAt\": \"2024-02-15T10:30:00\"}]}"
     )
     val items: Map<String, List<UserScaleItem>>
 ) {
 
     @Schema(description = "사용자 척도 점수 항목")
     data class UserScaleItem(
-        @Schema(description = "척도 카테고리 (ANXIETY: 불안, DEPRESSION: 우울, ANGER: 분노)", example = "ANXIETY")
+        @Schema(description = "척도 카테고리 (ANXIETY_DEPRESSION: 불안/우울, ANGER: 분노)", example = "ANXIETY_DEPRESSION")
         val scaleCategory: ScaleCategory,
 
         @Schema(description = "척도 점수", example = "12")
