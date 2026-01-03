@@ -16,7 +16,7 @@ data class AdminUserScaleFindAllResponse(
 
     @Schema(description = "사용자 척도 점수 항목")
     data class UserScaleItem(
-        @Schema(description = "척도 카테고리 (ANXIETY_DEPRESSION: 불안/우울, ANGER: 분노)", example = "ANXIETY")
+        @Schema(description = "척도 카테고리 (ANXIETY_DEPRESSION: 불안/우울, ANGER: 분노)", example = "ANXIETY_DEPRESSION")
         val scaleCategory: ScaleCategory,
 
         @Schema(description = "척도 점수", example = "12")

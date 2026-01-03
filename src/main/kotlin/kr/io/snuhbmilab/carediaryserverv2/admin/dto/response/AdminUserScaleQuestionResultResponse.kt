@@ -59,7 +59,7 @@ data class AdminUserScaleQuestionResultResponse(
 
     @Schema(description = "척도 질문 결과 정보")
     data class ScaleQuestionResultDto(
-        @Schema(description = "척도 카테고리 (ANXIETY_DEPRESSION: 불안/우울, ANGER: 분노)", example = "ANXIETY")
+        @Schema(description = "척도 카테고리 (ANXIETY_DEPRESSION: 불안/우울, ANGER: 분노)", example = "ANXIETY_DEPRESSION")
         val scaleCategory: ScaleCategory,
 
         @Schema(description = "해당 척도의 총점", example = "15")
