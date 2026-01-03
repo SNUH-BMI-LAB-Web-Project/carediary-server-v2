@@ -1,13 +1,16 @@
 package kr.io.snuhbmilab.carediaryserverv2.domain.diary.service
 
+import kr.io.snuhbmilab.carediaryserverv2.domain.diary.repository.DiaryAnalysisResultRepository
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.repository.DiaryKeywordExtractionRepository
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.repository.DiaryWelfareServiceRepository
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.repository.PieRepository
 import org.springframework.stereotype.Service
+import java.time.LocalDateTime
 import java.util.UUID
 
 @Service
 class DiaryAnalysisResultService(
+    private val diaryAnalysisResultRepository: DiaryAnalysisResultRepository,
     private val pieRepository: PieRepository,
     private val diaryKeywordExtractionRepository: DiaryKeywordExtractionRepository,
     private val diaryWelfareServiceRepository: DiaryWelfareServiceRepository
@@ -16,4 +19,9 @@ class DiaryAnalysisResultService(
 
     fun findAllKeywordExtractions(diaryId: UUID) = diaryKeywordExtractionRepository.findAllByDiaryId(diaryId)
     fun findAllWelfareServices(diaryId: UUID) = diaryWelfareServiceRepository.findAllByDiaryId(diaryId)
+
+    fun countAll(): Long = diaryAnalysisResultRepository.count()
+
+    fun countByCreatedAtAfter(startDateTime: LocalDateTime): Long =
+        diaryAnalysisResultRepository.countByCreatedAtAfter(startDateTime)
 }

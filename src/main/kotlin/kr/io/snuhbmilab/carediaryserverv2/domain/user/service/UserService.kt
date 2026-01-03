@@ -9,6 +9,7 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.util.UUID
 
 @Service
@@ -41,4 +42,9 @@ class UserService(
     }
 
     fun findAllRegistered(): List<User> = userRepository.findAllByNameIsNotNull()
+
+    fun countAll(): Long = userRepository.count()
+
+    fun countByCreatedAtAfter(startDateTime: LocalDateTime): Long =
+        userRepository.countByCreatedAtAfter(startDateTime)
 }
