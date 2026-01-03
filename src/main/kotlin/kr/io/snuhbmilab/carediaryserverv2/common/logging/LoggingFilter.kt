@@ -5,6 +5,7 @@ import jakarta.servlet.FilterChain
 import jakarta.servlet.ServletException
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
+import kr.io.snuhbmilab.carediaryserverv2.common.constants.LOG_EXCLUDED_ENDPOINTS
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
 import java.io.IOException
@@ -27,6 +28,10 @@ class LoggingFilter : OncePerRequestFilter() {
         val elapsed = end - start
 
         kotlinLogger.info { "[${request.method}] ${request.requestURI} (ip=${request.ip}) (status=${response.status}) ${elapsed}ms" }
+    }
+
+    override fun shouldNotFilter(request: HttpServletRequest): Boolean {
+        return LOG_EXCLUDED_ENDPOINTS.any { request.requestURI.startsWith(it) }
     }
 
     private val HttpServletRequest.ip: String?
