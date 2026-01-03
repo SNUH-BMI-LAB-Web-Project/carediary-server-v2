@@ -87,7 +87,7 @@ class User(
         constructor(socialProvider: String, socialId: String) : this("$socialProvider:$socialId")
 
         init {
-            require(PROVIDER_ID_PATTERN.matches(value)) { "올바르지 않은 소셜 Provider ID 형식입니다." }
+            require(PROVIDER_ID_PATTERN.matches(value)) { "올바르지 않은 소셜 Provider ID 형식입니다. $value" }
         }
 
         val socialProvider: String
