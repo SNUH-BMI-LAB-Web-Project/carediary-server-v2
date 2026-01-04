@@ -51,4 +51,8 @@ class UserService(
     fun searchByName(search: String?): List<User> =
         if (search.isNullOrBlank()) findAllRegistered()
         else userRepository.searchByName(search)
+
+    fun validateExists(userId: UUID) {
+        userRepository.findByIdOrNull(userId) ?: throw BusinessException(UserErrorCode.USER_NOT_FOUND)
+    }
 }
