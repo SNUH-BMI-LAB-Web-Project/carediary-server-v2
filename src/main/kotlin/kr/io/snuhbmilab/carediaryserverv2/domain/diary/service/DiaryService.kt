@@ -87,6 +87,9 @@ class DiaryService(
 
     fun countByUserId(userId: UUID): Long = diaryRepository.countByUploaderId(userId)
 
+    fun findAllByUserIdAndDate(userId: UUID, date: LocalDate): List<Diary> =
+        diaryRepository.findAllByUploaderIdAndDateOrderByCreatedAtDesc(userId, date)
+
     fun countByUserIds(userIds: List<UUID>): Map<UUID, Long> {
         if (userIds.isEmpty()) return emptyMap()
         return diaryRepository.countByUploaderIdIn(userIds)

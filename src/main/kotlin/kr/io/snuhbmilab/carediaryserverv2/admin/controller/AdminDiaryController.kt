@@ -1,5 +1,6 @@
 package kr.io.snuhbmilab.carediaryserverv2.admin.controller
 
+import kr.io.snuhbmilab.carediaryserverv2.admin.dto.response.AdminDiaryFindAllResponse
 import kr.io.snuhbmilab.carediaryserverv2.admin.dto.response.AdminDiaryKeywordResponse
 import kr.io.snuhbmilab.carediaryserverv2.admin.dto.response.AdminDiarySdohResponse
 import kr.io.snuhbmilab.carediaryserverv2.admin.dto.response.AdminDiaryWelfareServiceResponse
@@ -8,7 +9,9 @@ import kr.io.snuhbmilab.carediaryserverv2.common.dto.CommonResponse
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import java.time.LocalDate
 import java.util.UUID
 
 @RestController
@@ -29,5 +32,13 @@ class AdminDiaryController(
     @GetMapping("/{diaryId}/welfare-services")
     override fun findWelfareServices(@PathVariable diaryId: UUID): CommonResponse<AdminDiaryWelfareServiceResponse> {
         return CommonResponse.ok(adminDiaryFacade.findWelfareServices(diaryId))
+    }
+
+    @GetMapping
+    override fun findAllByUserIdAndDate(
+        @RequestParam userId: UUID,
+        @RequestParam date: LocalDate
+    ): CommonResponse<AdminDiaryFindAllResponse> {
+        return CommonResponse.ok(adminDiaryFacade.findAllByUserIdAndDate(userId, date))
     }
 }

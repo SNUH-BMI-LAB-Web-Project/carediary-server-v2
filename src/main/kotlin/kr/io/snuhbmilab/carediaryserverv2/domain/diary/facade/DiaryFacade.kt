@@ -77,7 +77,7 @@ class DiaryFacade(
 
         validateDiaryUploader(user, diary)
 
-        val questionScores = diaryRecommendedQuestionService.findAllByDiary(diary)
+        val questionScores = diaryRecommendedQuestionService.findAll(diary)
 
         return DiaryDetailResponse.of(diary, questionScores)
     }
