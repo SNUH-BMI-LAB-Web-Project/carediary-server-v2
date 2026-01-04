@@ -8,6 +8,7 @@ import kr.io.snuhbmilab.carediaryserverv2.domain.diary.dto.response.DiaryDatesRe
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.dto.response.DiaryDetailResponse
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.dto.response.DiaryFindAllResponse
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.entity.Diary
+import kr.io.snuhbmilab.carediaryserverv2.domain.diary.event.DiaryCreatedEvent
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.exception.DiaryErrorCode
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.service.DiaryRecommendedQuestionService
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.service.DiaryService
@@ -15,6 +16,7 @@ import kr.io.snuhbmilab.carediaryserverv2.domain.user.entity.User
 import kr.io.snuhbmilab.carediaryserverv2.domain.user.service.UserService
 import kr.io.snuhbmilab.carediaryserverv2.external.model.ModelClient
 import kr.io.snuhbmilab.carediaryserverv2.external.model.dto.GenerateSummaryRequest
+import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
@@ -29,7 +31,8 @@ class DiaryFacade(
     private val userService: UserService,
     private val diaryService: DiaryService,
     private val diaryRecommendedQuestionService: DiaryRecommendedQuestionService,
-    private val modelClient: ModelClient
+    private val modelClient: ModelClient,
+    private val applicationEventPublisher: ApplicationEventPublisher,
 ) {
 
     @Transactional
@@ -60,6 +63,8 @@ class DiaryFacade(
             logger.warn(e) { "일기 요약 생성 실패 [diaryId=${diary.id}]: ${e.message}" }
             "요약 없음"
         }
+
+        applicationEventPublisher.publishEvent(DiaryCreatedEvent(diaryId = diary.id!!, uploaderId = userId))
 
         return DiaryCreateResponse(summary)
     }
