@@ -28,8 +28,7 @@ class DiaryService(
         )
 
     fun validateExists(diaryId: UUID) {
-        diaryRepository.findByIdOrNull(diaryId)
-            ?: throw BusinessException(DiaryErrorCode.DIARY_NOT_FOUND)
+        findById(diaryId)
     }
 
     fun findAllByUserAndPeriod(user: User, startDate: LocalDate?, endDate: LocalDate?): List<Diary> {
@@ -86,6 +85,9 @@ class DiaryService(
     }
 
     fun countByUserId(userId: UUID): Long = diaryRepository.countByUploaderId(userId)
+
+    fun findAllByUserIdAndDate(userId: UUID, date: LocalDate): List<Diary> =
+        diaryRepository.findAllByUploaderIdAndDateOrderByCreatedAtDesc(userId, date)
 
     fun countByUserIds(userIds: List<UUID>): Map<UUID, Long> {
         if (userIds.isEmpty()) return emptyMap()

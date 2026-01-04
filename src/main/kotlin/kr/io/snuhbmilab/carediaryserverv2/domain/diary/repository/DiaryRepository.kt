@@ -47,6 +47,8 @@ interface DiaryRepository : JpaRepository<Diary, UUID> {
 
     fun countByUploaderId(uploaderId: UUID): Long
 
+    fun findAllByUploaderIdAndDateOrderByCreatedAtDesc(uploaderId: UUID, date: LocalDate): List<Diary>
+
     @Query("""
         SELECT d.uploader.id as uploaderId, COUNT(d) as count
         FROM Diary d
