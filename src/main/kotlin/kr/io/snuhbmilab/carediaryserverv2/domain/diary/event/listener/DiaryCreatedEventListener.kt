@@ -5,10 +5,12 @@ import kr.io.snuhbmilab.carediaryserverv2.external.sqs.SqsMessageSender
 import kr.io.snuhbmilab.carediaryserverv2.external.sqs.dto.DiaryAnalysisRequest
 import org.springframework.context.event.EventListener
 import org.springframework.stereotype.Component
+import org.springframework.transaction.event.TransactionPhase
+import org.springframework.transaction.event.TransactionalEventListener
 
 @Component
 class DiaryCreatedEventListener(private val sqsMessageSender: SqsMessageSender) {
-    @EventListener
+    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     fun onDiaryCreated(event: DiaryCreatedEvent) {
         sqsMessageSender.sendAsync(
             DiaryAnalysisRequest.of(
