@@ -4,6 +4,8 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
+    hikari:
+      maximum-pool-size: 20
 
   jpa:
     properties:
@@ -62,6 +64,16 @@ spring:
       max-request-size: 200MB
       resolve-lazily: true
 
+  cloud:
+    aws:
+      credentials:
+        access-key: ${AWS_ACCESS_KEY}
+        secret-key: ${AWS_SECRET_KEY}
+      region:
+        static: ${AWS_REGION:ap-northeast-2}
+      sqs:
+        enabled: true
+
 #cloud:
 #  aws:
 #    s3:
@@ -91,3 +103,9 @@ service:
 
 external-api:
   model-uri: ${EXTERNAL_API_MODEL_URI}
+
+aws:
+  sqs:
+    model-input-queue-url: ${AWS_SQS_MODEL_INPUT_QUEUE_URL}
+    model-output-queue-url: ${AWS_SQS_MODEL_OUTPUT_QUEUE_URL}
+    region: ${AWS_REGION:ap-northeast-2}
