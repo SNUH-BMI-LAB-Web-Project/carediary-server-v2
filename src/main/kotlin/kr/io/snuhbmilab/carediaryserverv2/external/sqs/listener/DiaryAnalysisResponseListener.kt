@@ -25,7 +25,6 @@ class DiaryAnalysisResponseListener(
             logger.info { "분석 결과 저장 완료 - diaryId: ${response.diaryId}" }
         } catch (e: Exception) {
             logger.error(e) { "분석 결과 저장 실패 - diaryId: ${response.diaryId}" }
-            throw e
         }
     }
 }
