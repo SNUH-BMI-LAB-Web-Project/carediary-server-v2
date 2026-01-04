@@ -1,10 +1,16 @@
 package kr.io.snuhbmilab.carediaryserverv2.domain.diary.service
 
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import kr.io.snuhbmilab.carediaryserverv2.common.utils.joinToStringDBText
+import kr.io.snuhbmilab.carediaryserverv2.domain.diary.entity.DiaryAnalysisResult
+import kr.io.snuhbmilab.carediaryserverv2.domain.diary.entity.Pie
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.repository.DiaryAnalysisResultRepository
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.repository.DiaryKeywordExtractionRepository
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.repository.DiaryWelfareServiceRepository
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.repository.PieRepository
+import kr.io.snuhbmilab.carediaryserverv2.external.sqs.dto.DiaryAnalysisResponse
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 import java.util.UUID
 
@@ -13,7 +19,8 @@ class DiaryAnalysisResultService(
     private val diaryAnalysisResultRepository: DiaryAnalysisResultRepository,
     private val pieRepository: PieRepository,
     private val diaryKeywordExtractionRepository: DiaryKeywordExtractionRepository,
-    private val diaryWelfareServiceRepository: DiaryWelfareServiceRepository
+    private val diaryWelfareServiceRepository: DiaryWelfareServiceRepository,
+    private val diaryService: DiaryService,
 ) {
     fun findAllPie(diaryId: UUID) = pieRepository.findAllByDiaryId(diaryId)
 
@@ -31,5 +38,39 @@ class DiaryAnalysisResultService(
         if (userIds.isEmpty()) return emptyMap()
         return diaryAnalysisResultRepository.countByUploaderIdIn(userIds)
             .associate { it.uploaderId to it.count }
+    }
+
+    @Transactional
+    fun saveAnalysisResult(response: DiaryAnalysisResponse) {
+        val objectMapper = jacksonObjectMapper()
+
+        val diary = diaryService.findById(response.diaryId)
+
+        val fullOutputText = objectMapper.writeValueAsString(response)
+
+        val analysisResult = DiaryAnalysisResult(
+            diary = diary,
+            fullOutputText = fullOutputText
+        )
+        val savedAnalysisResult = diaryAnalysisResultRepository.save(analysisResult)
+
+        val pies = response.items.map { item ->
+            Pie(
+                diaryAnalysisResult = savedAnalysisResult,
+                diary = diary,
+                elementNo = item.elementNo.toShort(),
+                majorCat = item.majorCat,
+                middleCat = item.middleCat,
+                subCat = item.subCat,
+                signCode = item.signCode,
+                typeLabel = item.typeLabel,
+                severity = item.severity.toShort(),
+                duration = item.duration?.toShort(),
+                coping = item.coping?.toShort(),
+                recommendation = item.recommendation,
+                evidences = item.evidences.joinToStringDBText(),
+            )
+        }
+        pieRepository.saveAll(pies)
     }
 }
