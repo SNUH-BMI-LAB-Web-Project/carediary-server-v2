@@ -52,6 +52,7 @@ class AdminUserFacade(
 
     fun findAllUsers(): AdminUserFindAllResponse {
         val users = userService.findAllRegistered()
+            .filterNot { it.isAdmin() }
         val riskEvaluations = userRiskService.findAllByUserIds(users.map { it.id!! })
             .groupBy { it.userId }
 
