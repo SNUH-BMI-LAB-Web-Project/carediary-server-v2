@@ -64,6 +64,16 @@ spring:
       max-request-size: 200MB
       resolve-lazily: true
 
+  cloud:
+    aws:
+      credentials:
+        access-key: ${AWS_ACCESS_KEY}
+        secret-key: ${AWS_SECRET_KEY}
+      region:
+        static: ${AWS_REGION:ap-northeast-2}
+      sqs:
+        enabled: true
+
 #cloud:
 #  aws:
 #    s3:
@@ -93,15 +103,6 @@ service:
 
 external-api:
   model-uri: ${EXTERNAL_API_MODEL_URI}
-
-spring.cloud.aws:
-  credentials:
-    access-key: ${AWS_ACCESS_KEY}
-    secret-key: ${AWS_SECRET_KEY}
-  region:
-    static: ${AWS_REGION:ap-northeast-2}
-  sqs:
-    enabled: true
 
 aws:
   sqs:
