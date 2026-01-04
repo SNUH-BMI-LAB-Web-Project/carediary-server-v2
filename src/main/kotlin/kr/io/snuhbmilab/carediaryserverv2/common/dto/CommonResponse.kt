@@ -6,6 +6,7 @@ import kr.io.snuhbmilab.carediaryserverv2.common.GlobalErrorCode
 import kr.io.snuhbmilab.carediaryserverv2.common.SUCCESS_CODE
 import kr.io.snuhbmilab.carediaryserverv2.common.SUCCESS_MESSAGE
 import kr.io.snuhbmilab.carediaryserverv2.common.SuccessCode
+import kr.io.snuhbmilab.carediaryserverv2.common.SuccessMessage
 import org.springframework.core.MethodParameter
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
@@ -26,6 +27,10 @@ data class CommonResponse<T>(
         @JvmStatic
         fun <T> success(successCode: SuccessCode, data: T? = null): CommonResponse<T> =
             CommonResponse(successCode.httpStatus.value(), SUCCESS_CODE, SUCCESS_MESSAGE, data)
+
+        @JvmStatic
+        fun <T> ok(successMessage: SuccessMessage, data: T? = null): CommonResponse<T> =
+            CommonResponse(SuccessCode.OK.httpStatus.value(), successMessage.name, successMessage.message, data)
 
         @JvmStatic
         fun <T> ok(data: T? = null): CommonResponse<T> = success(SuccessCode.OK, data)

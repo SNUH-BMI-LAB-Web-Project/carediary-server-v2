@@ -13,6 +13,12 @@ enum class SuccessCode(
     NO_CONTENT(HttpStatus.NO_CONTENT),
 }
 
+enum class SuccessMessage(val message: String) {
+    DIARY_CREATED("일기 작성을 완료하였습니다!"),
+    SCALE_QUESTION_ANSWER_REGISTERED("설문 답변이 등록되었습니다!"),
+    USER_REGISTERED("회원가입에 성공하였습니다.")
+}
+
 interface ErrorCode {
     val httpStatus: HttpStatus
     val message: String

@@ -1,5 +1,6 @@
 package kr.io.snuhbmilab.carediaryserverv2.domain.user.controller
 
+import kr.io.snuhbmilab.carediaryserverv2.common.SuccessMessage
 import kr.io.snuhbmilab.carediaryserverv2.common.annotation.UserId
 import kr.io.snuhbmilab.carediaryserverv2.common.dto.CommonResponse
 import kr.io.snuhbmilab.carediaryserverv2.domain.user.dto.request.UserRegisterRequest
@@ -21,7 +22,7 @@ class UserController(
 
     @PostMapping("/register")
     override fun register(@UserId userId: UUID, @RequestBody request: UserRegisterRequest): CommonResponse<UserRegisterResponse> {
-        return CommonResponse.ok(userFacade.register(userId, request))
+        return CommonResponse.ok(SuccessMessage.USER_REGISTERED, userFacade.register(userId, request))
     }
 
     @GetMapping("/me")

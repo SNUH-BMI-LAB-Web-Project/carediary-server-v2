@@ -1,6 +1,7 @@
 package kr.io.snuhbmilab.carediaryserverv2.domain.diary.controller
 
 import jakarta.validation.Valid
+import kr.io.snuhbmilab.carediaryserverv2.common.SuccessMessage
 import kr.io.snuhbmilab.carediaryserverv2.common.annotation.UserId
 import kr.io.snuhbmilab.carediaryserverv2.common.dto.CommonResponse
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.dto.request.DiaryCreateRequest
@@ -31,7 +32,7 @@ class DiaryController(
         @UserId userId: UUID,
         @Valid @RequestBody request: DiaryCreateRequest
     ): CommonResponse<DiaryCreateResponse> {
-        return CommonResponse.ok(diaryFacade.createDiary(userId, request))
+        return CommonResponse.ok(SuccessMessage.DIARY_CREATED, diaryFacade.createDiary(userId, request))
     }
 
     @GetMapping("/me")
