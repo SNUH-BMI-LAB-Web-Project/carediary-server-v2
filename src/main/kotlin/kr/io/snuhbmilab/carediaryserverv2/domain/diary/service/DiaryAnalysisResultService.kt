@@ -42,7 +42,6 @@ class DiaryAnalysisResultService(
 
     @Transactional
     fun saveAnalysisResult(response: DiaryAnalysisResponse) {
-        val objectMapper = jacksonObjectMapper()
 
         val diary = diaryService.findById(response.diaryId)
 
@@ -72,5 +71,9 @@ class DiaryAnalysisResultService(
             )
         }
         pieRepository.saveAll(pies)
+    }
+
+    companion object {
+        private val objectMapper = jacksonObjectMapper()
     }
 }
