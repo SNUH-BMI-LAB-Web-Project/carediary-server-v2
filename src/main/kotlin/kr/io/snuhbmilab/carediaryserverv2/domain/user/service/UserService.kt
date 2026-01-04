@@ -53,6 +53,6 @@ class UserService(
         else userRepository.searchByName(search)
 
     fun validateExists(userId: UUID) {
-        userRepository.findByIdOrNull(userId) ?: throw BusinessException(UserErrorCode.USER_NOT_FOUND)
+        findById(userId)
     }
 }

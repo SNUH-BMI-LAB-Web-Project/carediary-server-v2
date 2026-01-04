@@ -28,8 +28,7 @@ class DiaryService(
         )
 
     fun validateExists(diaryId: UUID) {
-        diaryRepository.findByIdOrNull(diaryId)
-            ?: throw BusinessException(DiaryErrorCode.DIARY_NOT_FOUND)
+        findById(diaryId)
     }
 
     fun findAllByUserAndPeriod(user: User, startDate: LocalDate?, endDate: LocalDate?): List<Diary> {
