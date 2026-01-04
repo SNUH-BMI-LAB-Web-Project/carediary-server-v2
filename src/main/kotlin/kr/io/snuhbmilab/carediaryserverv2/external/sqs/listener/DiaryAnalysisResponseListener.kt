@@ -1,5 +1,7 @@
 package kr.io.snuhbmilab.carediaryserverv2.external.sqs.listener
 
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
 import io.awspring.cloud.sqs.annotation.SqsListener
 import io.github.oshai.kotlinlogging.KotlinLogging
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.service.DiaryAnalysisResultService
@@ -18,8 +20,10 @@ class DiaryAnalysisResponseListener(
         maxConcurrentMessages = "10",
         maxMessagesPerPoll = "10"
     )
-    fun onMessage(response: DiaryAnalysisResponse) {
+    fun onMessage(payload: String) {
         try {
+            val response = objectMapper.readValue<DiaryAnalysisResponse>(payload)
+
             logger.info { "SQS 분석 응답 수신 - diaryId: ${response.diaryId}, PIE-items: ${response.items.size}개" }
 
             if (response.items.isEmpty()) {
@@ -29,7 +33,11 @@ class DiaryAnalysisResponseListener(
             diaryAnalysisResultService.saveAnalysisResult(response)
             logger.info { "분석 결과 저장 완료 - diaryId: ${response.diaryId}" }
         } catch (e: Exception) {
-            logger.error(e) { "분석 결과 저장 실패 - diaryId: ${response.diaryId}" }
+            logger.error(e) { "SQS 분석 결과 저장 실패" }
         }
+    }
+
+    companion object {
+        private val objectMapper = jacksonObjectMapper()
     }
 }
