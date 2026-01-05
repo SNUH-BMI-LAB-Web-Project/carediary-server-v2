@@ -30,7 +30,7 @@ class HomeFacade(
                 enumValues<Diary.Emotion>().forEach { putIfAbsent(it, 0) }
             }
 
-        val welfareServices = welfareRecommendService.findAllVisible(user)
+        val welfareServices = welfareRecommendService.findTop3Visible(user)
         val termCount = user.termCount
         val isScaleQuestionRequired = scaleQuestionService.needsScaleQuestion(user, termCount)
 

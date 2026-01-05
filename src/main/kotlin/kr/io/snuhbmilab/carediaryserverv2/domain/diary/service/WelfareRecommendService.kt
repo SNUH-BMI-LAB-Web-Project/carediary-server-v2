@@ -11,4 +11,6 @@ class WelfareRecommendService(
 ) {
 
     fun findAllVisible(user: User) = diaryWelfareServiceRepository.findAllByUserAndVisibleIsTrue(user)
+
+    fun findTop3Visible(user: User) = diaryWelfareServiceRepository.findTop3ByUserAndVisibleIsTrueOrderByCreatedAtDesc(user)
 }

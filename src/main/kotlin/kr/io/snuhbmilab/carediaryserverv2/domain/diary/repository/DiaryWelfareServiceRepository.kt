@@ -8,4 +8,5 @@ import java.util.UUID
 interface DiaryWelfareServiceRepository : JpaRepository<DiaryWelfareServiceEntity, Long> {
     fun findAllByUserAndVisibleIsTrue(user: User): List<DiaryWelfareServiceEntity>
     fun findAllByDiaryId(diaryId: UUID): List<DiaryWelfareServiceEntity>
+    fun findTop3ByUserAndVisibleIsTrueOrderByCreatedAtDesc(user: User): List<DiaryWelfareServiceEntity>
 }
