@@ -88,4 +88,42 @@ interface AdminDiaryApi {
         @Parameter(description = "작성일 (yyyy-MM-dd)", required = true)
         @RequestParam date: LocalDate
     ): CommonResponse<AdminDiaryFindAllResponse>
+
+    @Operation(
+        summary = "복지 서비스 표시 활성화",
+        description = "특정 일기의 복지 서비스 추천을 사용자에게 표시합니다."
+    )
+    @ApiResponses(
+        value = [
+            ApiResponse(responseCode = "200", description = "복지 서비스 표시 활성화 성공"),
+            ApiResponse(responseCode = "401", description = "인증 실패"),
+            ApiResponse(responseCode = "403", description = "권한 없음"),
+            ApiResponse(responseCode = "404", description = "일기 또는 복지 서비스를 찾을 수 없음")
+        ]
+    )
+    fun updateWelfareServiceVisible(
+        @Parameter(description = "일기 ID", required = true)
+        @PathVariable diaryId: UUID,
+        @Parameter(description = "복지 서비스 ID", required = true)
+        @PathVariable welfareServiceId: Long
+    ): CommonResponse<Unit>
+
+    @Operation(
+        summary = "복지 서비스 표시 비활성화",
+        description = "특정 일기의 복지 서비스 추천을 사용자에게 숨깁니다."
+    )
+    @ApiResponses(
+        value = [
+            ApiResponse(responseCode = "200", description = "복지 서비스 표시 비활성화 성공"),
+            ApiResponse(responseCode = "401", description = "인증 실패"),
+            ApiResponse(responseCode = "403", description = "권한 없음"),
+            ApiResponse(responseCode = "404", description = "일기 또는 복지 서비스를 찾을 수 없음")
+        ]
+    )
+    fun updateWelfareServiceInvisible(
+        @Parameter(description = "일기 ID", required = true)
+        @PathVariable diaryId: UUID,
+        @Parameter(description = "복지 서비스 ID", required = true)
+        @PathVariable welfareServiceId: Long
+    ): CommonResponse<Unit>
 }

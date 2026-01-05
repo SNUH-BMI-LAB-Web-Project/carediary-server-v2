@@ -50,4 +50,16 @@ class AdminDiaryFacade(
 
         return AdminDiaryFindAllResponse.of(diaries, questionScoresMap)
     }
+
+    @Transactional
+    fun updateWelfareServiceVisible(diaryId: UUID, welfareServiceId: Long) {
+        diaryService.validateExists(diaryId)
+        diaryAnalysisResultService.updateWelfareServiceVisible(diaryId, welfareServiceId)
+    }
+
+    @Transactional
+    fun updateWelfareServiceInvisible(diaryId: UUID, welfareServiceId: Long) {
+        diaryService.validateExists(diaryId)
+        diaryAnalysisResultService.updateWelfareServiceInvisible(diaryId, welfareServiceId)
+    }
 }
