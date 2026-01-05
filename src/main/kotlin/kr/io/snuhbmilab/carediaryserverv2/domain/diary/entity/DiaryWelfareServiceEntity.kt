@@ -68,8 +68,16 @@ class DiaryWelfareServiceEntity(
     val matchedInterestKeywords: String? = null,
 
     @Column(columnDefinition = "TINYINT(1)")
-    val visible: Boolean = false
+    var visible: Boolean = false
 ) : BaseTimeEntity() {
+
+    fun updateVisible() {
+        this.visible = true
+    }
+
+    fun updateInvisible() {
+        this.visible = false
+    }
 
     enum class ServiceScope {
         LOCAL, NATIONAL

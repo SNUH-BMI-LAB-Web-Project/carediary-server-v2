@@ -1,9 +1,12 @@
 package kr.io.snuhbmilab.carediaryserverv2.domain.diary.service
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import kr.io.snuhbmilab.carediaryserverv2.common.exception.BusinessException
 import kr.io.snuhbmilab.carediaryserverv2.common.utils.joinToStringDBText
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.entity.DiaryAnalysisResult
+import kr.io.snuhbmilab.carediaryserverv2.domain.diary.entity.DiaryWelfareServiceEntity
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.entity.Pie
+import kr.io.snuhbmilab.carediaryserverv2.domain.diary.exception.DiaryErrorCode
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.repository.DiaryAnalysisResultRepository
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.repository.DiaryKeywordExtractionRepository
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.repository.DiaryWelfareServiceRepository
@@ -26,6 +29,23 @@ class DiaryAnalysisResultService(
 
     fun findAllKeywordExtractions(diaryId: UUID) = diaryKeywordExtractionRepository.findAllByDiaryId(diaryId)
     fun findAllWelfareServices(diaryId: UUID) = diaryWelfareServiceRepository.findAllByDiaryId(diaryId)
+
+    fun findWelfareService(diaryId: UUID, welfareServiceId: Long): DiaryWelfareServiceEntity {
+        return diaryWelfareServiceRepository.findByDiaryIdAndId(diaryId, welfareServiceId)
+            ?: throw BusinessException(DiaryErrorCode.WELFARE_SERVICE_NOT_FOUND)
+    }
+
+    @Transactional
+    fun updateWelfareServiceVisible(diaryId: UUID, welfareServiceId: Long) {
+        val welfareService = findWelfareService(diaryId, welfareServiceId)
+        welfareService.updateVisible()
+    }
+
+    @Transactional
+    fun updateWelfareServiceInvisible(diaryId: UUID, welfareServiceId: Long) {
+        val welfareService = findWelfareService(diaryId, welfareServiceId)
+        welfareService.updateInvisible()
+    }
 
     fun countAll(): Long = diaryAnalysisResultRepository.count()
 
