@@ -20,7 +20,7 @@ class DiaryService(
     fun create(user: User, date: LocalDate, content: String, emotion: Diary.Emotion): Diary =
         diaryRepository.save(
             Diary(
-                uploader = user,
+                uploaderId = user.id!!,
                 date = date,
                 content = content,
                 emotion = emotion

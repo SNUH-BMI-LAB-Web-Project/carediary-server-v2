@@ -59,7 +59,7 @@ data class AdminDiaryFindAllResponse(
                 questionScores: List<DiaryRecommendedQuestionUserScore>
             ) = AdminDiaryDto(
                 diaryId = diary.id!!,
-                uploaderId = diary.uploader.id!!,
+                uploaderId = diary.uploaderId,
                 date = diary.date,
                 content = diary.content,
                 emotion = diary.emotion,

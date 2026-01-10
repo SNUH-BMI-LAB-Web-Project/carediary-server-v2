@@ -2,6 +2,7 @@ package kr.io.snuhbmilab.carediaryserverv2.domain.user.event.listener
 
 import io.github.oshai.kotlinlogging.KotlinLogging
 import kr.io.snuhbmilab.carediaryserverv2.common.constants.ThreadPoolNames
+import kr.io.snuhbmilab.carediaryserverv2.domain.diary.event.DiaryAnalysisResultSavedEvent
 import kr.io.snuhbmilab.carediaryserverv2.domain.scalequestion.event.UserScaleQuestionResultRegisterEvent
 import kr.io.snuhbmilab.carediaryserverv2.domain.user.service.UserRiskEvaluator
 import org.springframework.scheduling.annotation.Async
@@ -19,6 +20,18 @@ class UserRiskEvaluateListener(
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     fun onScaleQuestionResultRegistered(event: UserScaleQuestionResultRegisterEvent) {
         val userId = event.userId
+
+        try {
+            userRiskEvaluator.evaluate(userId)
+        } catch(exception: Exception) {
+            logger.error(exception) { "사용자 위험군 판별 실패 userId=$userId" }
+        }
+    }
+
+    @Async(ThreadPoolNames.USER_RISK_EVALUATION)
+    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
+    fun onDiaryAnalysisResultSaved(event: DiaryAnalysisResultSavedEvent) {
+        val userId = event.uploaderId
 
         try {
             userRiskEvaluator.evaluate(userId)
