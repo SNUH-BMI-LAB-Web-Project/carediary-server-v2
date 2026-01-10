@@ -66,7 +66,7 @@ class DiaryAnalysisResultService(
     @Transactional
     fun saveAnalysisResult(response: DiaryAnalysisResponse) {
         val diaryId = response.diaryId
-        val diary = diaryService.findById(response.diaryId)
+        val diary = diaryService.findById(diaryId)
 
         val fullOutputText = objectMapper.writeValueAsString(response)
 
