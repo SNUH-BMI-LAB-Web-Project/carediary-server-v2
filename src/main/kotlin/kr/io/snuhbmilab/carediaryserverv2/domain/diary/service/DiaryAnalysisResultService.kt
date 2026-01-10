@@ -6,12 +6,14 @@ import kr.io.snuhbmilab.carediaryserverv2.common.utils.joinToStringDBText
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.entity.DiaryAnalysisResult
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.entity.DiaryWelfareServiceEntity
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.entity.Pie
+import kr.io.snuhbmilab.carediaryserverv2.domain.diary.event.DiaryAnalysisResultSavedEvent
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.exception.DiaryErrorCode
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.repository.DiaryAnalysisResultRepository
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.repository.DiaryKeywordExtractionRepository
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.repository.DiaryWelfareServiceRepository
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.repository.PieRepository
 import kr.io.snuhbmilab.carediaryserverv2.external.sqs.dto.DiaryAnalysisResponse
+import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
@@ -24,6 +26,7 @@ class DiaryAnalysisResultService(
     private val diaryKeywordExtractionRepository: DiaryKeywordExtractionRepository,
     private val diaryWelfareServiceRepository: DiaryWelfareServiceRepository,
     private val diaryService: DiaryService,
+    private val applicationEventPublisher: ApplicationEventPublisher,
 ) {
     fun findAllPie(diaryId: UUID) = pieRepository.findAllByDiaryId(diaryId)
 
@@ -62,7 +65,7 @@ class DiaryAnalysisResultService(
 
     @Transactional
     fun saveAnalysisResult(response: DiaryAnalysisResponse) {
-
+        val diaryId = response.diaryId
         val diary = diaryService.findById(response.diaryId)
 
         val fullOutputText = objectMapper.writeValueAsString(response)
@@ -91,6 +94,8 @@ class DiaryAnalysisResultService(
             )
         }
         pieRepository.saveAll(pies)
+
+        applicationEventPublisher.publishEvent(DiaryAnalysisResultSavedEvent(diaryId, diary.uploaderId))
     }
 
     companion object {

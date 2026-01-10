@@ -25,9 +25,12 @@ class Diary(
     @Column(name = "diary_id", nullable = false)
     val id: UUID? = null,
 
+    @Column(name = "uploader_id", nullable = false)
+    val uploaderId: UUID,
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "uploader_id", nullable = false)
-    val uploader: User,
+    @JoinColumn(name = "uploader_id", insertable = false, updatable = false)
+    val uploader: User? = null,
 
     @Column(name = "date", nullable = false)
     val date: LocalDate,

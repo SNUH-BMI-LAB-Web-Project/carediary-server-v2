@@ -95,7 +95,7 @@ class DiaryFacade(
     }
 
     private fun validateDiaryUploader(user: User, diary: Diary) {
-        if (user.id != diary.uploader.id) {
+        if (user.id != diary.uploaderId) {
             throw BusinessException(DiaryErrorCode.DIARY_ACCESS_DENIED)
         }
     }
