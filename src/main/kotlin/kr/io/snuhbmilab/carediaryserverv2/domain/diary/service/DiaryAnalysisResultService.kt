@@ -100,11 +100,15 @@ class DiaryAnalysisResultService(
     }
 
     fun findKeywordExtractionsMapByDiaryIds(diaryIds: List<UUID>): Map<UUID, List<DiaryKeywordExtraction>> {
+        if (diaryIds.isEmpty()) return emptyMap()
+
         return diaryKeywordExtractionRepository.findAllByDiaryIdIn(diaryIds)
             .groupBy { it.diaryId  }
     }
 
     fun findWelfareServicesMapByDiaryIds(diaryIds: List<UUID>): Map<UUID, List<DiaryWelfareServiceEntity>> {
+        if (diaryIds.isEmpty()) return emptyMap()
+
         return diaryWelfareServiceRepository.findAllByDiaryIdIn(diaryIds)
             .groupBy { it.diaryId }
     }
