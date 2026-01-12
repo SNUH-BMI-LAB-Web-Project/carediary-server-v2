@@ -4,6 +4,7 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import kr.io.snuhbmilab.carediaryserverv2.common.exception.BusinessException
 import kr.io.snuhbmilab.carediaryserverv2.common.utils.joinToStringDBText
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.entity.DiaryAnalysisResult
+import kr.io.snuhbmilab.carediaryserverv2.domain.diary.entity.DiaryKeywordExtraction
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.entity.DiaryWelfareServiceEntity
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.entity.Pie
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.event.DiaryAnalysisResultSavedEvent
@@ -96,6 +97,20 @@ class DiaryAnalysisResultService(
         pieRepository.saveAll(pies)
 
         applicationEventPublisher.publishEvent(DiaryAnalysisResultSavedEvent(diaryId, diary.uploaderId))
+    }
+
+    fun findKeywordExtractionsMapByDiaryIds(diaryIds: List<UUID>): Map<UUID, List<DiaryKeywordExtraction>> {
+        if (diaryIds.isEmpty()) return emptyMap()
+
+        return diaryKeywordExtractionRepository.findAllByDiaryIdIn(diaryIds)
+            .groupBy { it.diaryId  }
+    }
+
+    fun findWelfareServicesMapByDiaryIds(diaryIds: List<UUID>): Map<UUID, List<DiaryWelfareServiceEntity>> {
+        if (diaryIds.isEmpty()) return emptyMap()
+
+        return diaryWelfareServiceRepository.findAllByDiaryIdIn(diaryIds)
+            .groupBy { it.diaryId }
     }
 
     companion object {

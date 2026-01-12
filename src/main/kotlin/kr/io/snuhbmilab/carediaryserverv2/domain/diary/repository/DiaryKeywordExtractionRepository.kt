@@ -6,4 +6,5 @@ import java.util.UUID
 
 interface DiaryKeywordExtractionRepository : JpaRepository<DiaryKeywordExtraction, Long> {
     fun findAllByDiaryId(diaryId: UUID): List<DiaryKeywordExtraction>
+    fun findAllByDiaryIdIn(diaryIds: List<UUID>): List<DiaryKeywordExtraction>
 }

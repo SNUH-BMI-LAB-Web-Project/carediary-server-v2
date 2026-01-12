@@ -14,6 +14,7 @@ import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
 import kr.io.snuhbmilab.carediaryserverv2.common.entity.BaseTimeEntity
 import kr.io.snuhbmilab.carediaryserverv2.domain.user.entity.User
+import java.util.UUID
 
 @Entity
 @Table(name = "diary_welfare_services")
@@ -27,9 +28,12 @@ class DiaryWelfareServiceEntity(
     @JoinColumn(name = "user_id", nullable = false)
     val user: User,
 
+    @Column(name = "diary_id", nullable = false)
+    val diaryId: UUID,
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "diary_id", nullable = false)
-    val diary: Diary,
+    @JoinColumn(name = "diary_id", insertable = false, updatable = false)
+    val diary: Diary? = null,
 
     @Enumerated(EnumType.STRING)
     @Column(name = "service_scope", nullable = false)
