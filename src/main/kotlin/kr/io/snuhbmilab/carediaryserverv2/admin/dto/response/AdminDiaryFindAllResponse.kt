@@ -145,8 +145,10 @@ data class AdminDiaryFindAllResponse(
         @Schema(description = "추천 질문에 대한 사용자 점수 목록")
         val questionScores: List<RecommendedQuestionUserScoreDto>,
 
+        @Schema(description = "추출된 키워드 목록")
         val extractedKeywords: List<DiaryKeywordDto>,
 
+        @Schema(description = "매칭된 복지 서비스 목록")
         val welfareServices: List<DiaryWelfareServiceDto>,
     ) {
         companion object {
