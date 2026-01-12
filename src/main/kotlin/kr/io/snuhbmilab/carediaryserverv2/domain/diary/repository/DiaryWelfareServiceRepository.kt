@@ -10,4 +10,5 @@ interface DiaryWelfareServiceRepository : JpaRepository<DiaryWelfareServiceEntit
     fun findAllByDiaryId(diaryId: UUID): List<DiaryWelfareServiceEntity>
     fun findTop3ByUserAndVisibleIsTrueOrderByCreatedAtDesc(user: User): List<DiaryWelfareServiceEntity>
     fun findByDiaryIdAndId(diaryId: UUID, id: Long): DiaryWelfareServiceEntity?
+    fun findAllByDiaryIdIn(diaryIds: List<UUID>): List<DiaryWelfareServiceEntity>
 }
