@@ -12,7 +12,5 @@ interface UserScaleRepository : JpaRepository<UserScale, Long> {
 
     fun existsByUserIdAndTermCount(userId: UUID, termCount: Int): Boolean
 
-    fun existsByUserIdAndTermCountAndScaleCategoryAndScoreGreaterThanEqual(userId: UUID, termCount: Int, scaleCategory: ScaleCategory, score: Int): Boolean
-
     fun findByUserIdAndTermCountAndScaleCategory(userId: UUID, termCount: Int, scaleCategory: ScaleCategory): UserScale?
 }
