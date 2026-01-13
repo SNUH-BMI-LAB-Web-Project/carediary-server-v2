@@ -29,6 +29,9 @@ class UserScaleCalculator(
             scores[category] = currentScore + score
         }
 
-        scores.forEach { (category, score) -> userScaleService.append(user, category, score) }
+        scores.forEach { (category, score) ->
+            val angerAdjustedScore = if (category == ScaleCategory.ANGER) score - 72 else score
+            userScaleService.append(user, category, angerAdjustedScore)
+        }
     }
 }

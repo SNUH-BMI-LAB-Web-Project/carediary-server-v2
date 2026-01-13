@@ -2,7 +2,11 @@ package kr.io.snuhbmilab.carediaryserverv2.domain.user.constants
 
 enum class RiskReason(val description: String) {
     HIGH_PIE_SEVERITY("SDoH 검사 결과 심각도 이상 감지"),
-    HIGH_SCALE_SCORE("분노/불안/우울 척도 점수 이상 감지");
+    ANXIETY_DANGER("불안 위험"),
+    ANXIETY_HIGH("불안이 높음"),
+    DEPRESSION_DANGER("우울 위험"),
+    DEPRESSION_HIGH("우울이 높음"),
+    ANGER_DANGER("분노 위험");
 
     companion object {
         @JvmStatic
