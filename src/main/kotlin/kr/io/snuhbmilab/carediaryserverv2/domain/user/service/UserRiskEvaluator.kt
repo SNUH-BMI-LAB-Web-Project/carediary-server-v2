@@ -2,6 +2,7 @@ package kr.io.snuhbmilab.carediaryserverv2.domain.user.service
 
 import io.github.oshai.kotlinlogging.KotlinLogging
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.repository.PieRepository
+import kr.io.snuhbmilab.carediaryserverv2.domain.scalequestion.constants.ScaleCategory
 import kr.io.snuhbmilab.carediaryserverv2.domain.scalequestion.repository.UserScaleRepository
 import kr.io.snuhbmilab.carediaryserverv2.domain.user.constants.RiskReason
 import kr.io.snuhbmilab.carediaryserverv2.domain.user.entity.UserRiskEvaluation
@@ -21,7 +22,9 @@ class UserRiskEvaluator(
 ) {
     companion object {
         private const val SEVERITY_THRESHOLD = 4
-        private const val SCORE_THRESHOLD = 20
+        private const val ANXIETY_DEPRESSION_DANGER_THRESHOLD = 8
+        private const val ANXIETY_DEPRESSION_HIGH_THRESHOLD = 11
+        private const val ANGER_DANGER_THRESHOLD = 7
     }
 
     @Transactional
@@ -36,11 +39,39 @@ class UserRiskEvaluator(
             riskReasons.add(RiskReason.HIGH_PIE_SEVERITY)
         }
 
-        // 2. UserScale 점수 체크 (score >= 20, 현재 termCount 기준)
+        // 2. UserScale 점수 체크 (현재 termCount 기준)
         val currentTermCount = user.termCount
-        val hasHighScaleScore = userScaleRepository.existsByUserIdAndTermCountAndScoreGreaterThanEqual(userId, currentTermCount, SCORE_THRESHOLD)
-        if (hasHighScaleScore) {
-            riskReasons.add(RiskReason.HIGH_SCALE_SCORE)
+
+        // 2-1. 불안 점수 체크
+        val anxietyScale = userScaleRepository.findByUserIdAndTermCountAndScaleCategory(
+            userId, currentTermCount, ScaleCategory.ANXIETY
+        )
+        anxietyScale?.let {
+            when {
+                it.score >= ANXIETY_DEPRESSION_HIGH_THRESHOLD -> riskReasons.add(RiskReason.ANXIETY_HIGH)
+                it.score >= ANXIETY_DEPRESSION_DANGER_THRESHOLD -> riskReasons.add(RiskReason.ANXIETY_DANGER)
+            }
+        }
+
+        // 2-2. 우울 점수 체크
+        val depressionScale = userScaleRepository.findByUserIdAndTermCountAndScaleCategory(
+            userId, currentTermCount, ScaleCategory.DEPRESSION
+        )
+        depressionScale?.let {
+            when {
+                it.score >= ANXIETY_DEPRESSION_HIGH_THRESHOLD -> riskReasons.add(RiskReason.DEPRESSION_HIGH)
+                it.score >= ANXIETY_DEPRESSION_DANGER_THRESHOLD -> riskReasons.add(RiskReason.DEPRESSION_DANGER)
+            }
+        }
+
+        // 2-3. 분노 점수 체크
+        val angerScale = userScaleRepository.findByUserIdAndTermCountAndScaleCategory(
+            userId, currentTermCount, ScaleCategory.ANGER
+        )
+        angerScale?.let {
+            if (it.score >= ANGER_DANGER_THRESHOLD) {
+                riskReasons.add(RiskReason.ANGER_DANGER)
+            }
         }
 
         // 3. 위험군 여부 및 사유 결정
