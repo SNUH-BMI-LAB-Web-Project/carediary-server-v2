@@ -27,7 +27,7 @@ data class AdminUserScaleQuestionResultResponse(
     @Schema(description = "척도 질문 응답 회차", example = "3")
     val scaleQuestionTermCount: Int,
 
-    @Schema(description = "척도 카테고리별 질문 응답 결과 (키: ANXIETY_DEPRESSION/ANGER)")
+    @Schema(description = "척도 카테고리별 질문 응답 결과 (키: ANXIETY/DEPRESSION/ANGER)")
     val items: Map<ScaleCategory, ScaleQuestionResultDto>
 ) {
 
@@ -59,7 +59,7 @@ data class AdminUserScaleQuestionResultResponse(
 
     @Schema(description = "척도 질문 결과 정보")
     data class ScaleQuestionResultDto(
-        @Schema(description = "척도 카테고리 (ANXIETY_DEPRESSION: 불안/우울, ANGER: 분노)", example = "ANXIETY_DEPRESSION")
+        @Schema(description = "척도 카테고리 (ANXIETY: 불안, DEPRESSION: 우울, ANGER: 분노)", example = "ANXIETY")
         val scaleCategory: ScaleCategory,
 
         @Schema(description = "해당 척도의 총점", example = "15")
