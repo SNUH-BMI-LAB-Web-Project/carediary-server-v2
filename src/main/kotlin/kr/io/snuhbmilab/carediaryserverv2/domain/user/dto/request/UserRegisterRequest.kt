@@ -72,4 +72,6 @@ data class UserRegisterRequest(
 
     @Schema(description = "[환자 정보] 사회복지서비스 (다중 선택)", example = "[\"CAREGIVER_COST\", \"SPECIAL_DIET_PURCHASE\"]")
     val socialWelfareServiceLabels: List<String>?,
+
+    val managerId: Long?,
 )

@@ -4,13 +4,18 @@ import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
+import jakarta.persistence.FetchType
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
+import jakarta.persistence.JoinColumn
+import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
 import kr.io.snuhbmilab.carediaryserverv2.common.constants.PROVIDER_ID_PATTERN
 import kr.io.snuhbmilab.carediaryserverv2.common.constants.Role
 import kr.io.snuhbmilab.carediaryserverv2.common.entity.BaseTimeEntity
+import org.hibernate.annotations.OnDelete
+import org.hibernate.annotations.OnDeleteAction
 import java.time.LocalDate
 import java.util.UUID
 
@@ -54,7 +59,15 @@ class User(
     var termCount: Int = 0,
 
     @Column(name = "first_diary_date")
-    var firstDiaryDate: LocalDate? = null
+    var firstDiaryDate: LocalDate? = null,
+
+    @Column(name = "manager_id")
+    var managerId: Long? = null,
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "manager_id", insertable = false, updatable = false)
+    @OnDelete(action = OnDeleteAction.SET_NULL)
+    var manager: User? = null,
 ) : BaseTimeEntity() {
 
     fun register(
@@ -63,7 +76,8 @@ class User(
         gender: Gender,
         birthDate: LocalDate,
         address: String,
-        primaryDiagnosis: String?
+        primaryDiagnosis: String?,
+        managerId: Long? = null
     ) {
         this.name = name
         this.role = role
@@ -71,6 +85,7 @@ class User(
         this.birthDate = birthDate
         this.address = address
         this.primaryDiagnosis = primaryDiagnosis
+        this.managerId = managerId
     }
 
     fun isRegistered(): Boolean = name != null
