@@ -4,6 +4,7 @@ import kr.io.snuhbmilab.carediaryserverv2.admin.dto.response.AdminUserDetailResp
 import kr.io.snuhbmilab.carediaryserverv2.admin.dto.response.AdminUserFindAllResponse
 import kr.io.snuhbmilab.carediaryserverv2.admin.dto.response.AdminUserScaleFindAllResponse
 import kr.io.snuhbmilab.carediaryserverv2.admin.dto.response.AdminUserScaleQuestionResultResponse
+import kr.io.snuhbmilab.carediaryserverv2.common.constants.Role
 import kr.io.snuhbmilab.carediaryserverv2.admin.dto.response.AdminUserWordCloudResponse
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.service.DiaryService
 import kr.io.snuhbmilab.carediaryserverv2.domain.scalequestion.service.ScaleQuestionService
@@ -54,9 +55,15 @@ class AdminUserFacade(
         return AdminUserScaleQuestionResultResponse.of(user, userScales, userAnswerMap)
     }
 
-    fun findAllUsers(): AdminUserFindAllResponse {
-        val users = userService.findAllRegistered()
-            .filterNot { it.isAdmin() }
+    fun findAllUsers(userId: UUID): AdminUserFindAllResponse {
+        val currentUser = userService.findById(userId)
+
+        val users = when (currentUser.role) {
+            Role.ADMIN -> userService.findAllByRole(Role.USER)
+            Role.CARE_MANAGER -> userService.findAllByRoleAndManagerId(Role.USER, currentUser.id!!)
+            else -> emptyList()
+        }
+
         val riskEvaluations = userRiskService.findAllByUserIds(users.map { it.id!! })
             .groupBy { it.userId }
 

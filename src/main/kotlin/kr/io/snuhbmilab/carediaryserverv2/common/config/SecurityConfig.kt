@@ -53,7 +53,7 @@ class SecurityConfig(
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .authorizeHttpRequests {
                 it.requestMatchers(*WHITELIST_ENDPOINTS).permitAll()
-                    .requestMatchers(ADMIN_ENDPOINT).hasAnyRole(Role.ADMIN.name)
+                    .requestMatchers(ADMIN_ENDPOINT).hasAnyRole(Role.ADMIN.name, Role.CARE_MANAGER.name)
                     .anyRequest().authenticated()
             }
             .exceptionHandling {

@@ -1,5 +1,6 @@
 package kr.io.snuhbmilab.carediaryserverv2.domain.user.repository
 
+import kr.io.snuhbmilab.carediaryserverv2.common.constants.Role
 import kr.io.snuhbmilab.carediaryserverv2.domain.user.entity.User
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
@@ -11,6 +12,10 @@ interface UserRepository : JpaRepository<User, UUID> {
     fun findAllByFirstDiaryDateIsNotNullAndTermCountGreaterThan(minTermCount: Int): List<User>
     fun findByEmailAndSocialProviderId(email: String, socialProviderId: User.SocialProviderId): User?
     fun findAllByNameIsNotNull(): List<User>
+    fun findAllByNameIsNotNullAndRole(role: Role): List<User>
+
+    @Query("SELECT u FROM User u WHERE u.name IS NOT NULL AND u.role = :role AND u.manager.id = :managerId")
+    fun findAllRegisteredByRoleAndManagerId(role: Role, managerId: UUID): List<User>
 
     @Query("SELECT COUNT(u) FROM User u WHERE u.createdAt >= :startDateTime")
     fun countByCreatedAtAfter(startDateTime: LocalDateTime): Long

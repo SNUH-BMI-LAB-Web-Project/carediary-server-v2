@@ -43,6 +43,11 @@ class UserService(
 
     fun findAllRegistered(): List<User> = userRepository.findAllByNameIsNotNull()
 
+    fun findAllByRole(role: Role): List<User> = userRepository.findAllByNameIsNotNullAndRole(role)
+
+    fun findAllByRoleAndManagerId(role: Role, managerId: UUID): List<User> =
+        userRepository.findAllRegisteredByRoleAndManagerId(role, managerId)
+
     fun countAll(): Long = userRepository.count()
 
     fun countByCreatedAtAfter(startDateTime: LocalDateTime): Long =
