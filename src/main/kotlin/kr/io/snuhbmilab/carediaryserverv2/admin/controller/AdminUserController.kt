@@ -4,6 +4,7 @@ import kr.io.snuhbmilab.carediaryserverv2.admin.dto.response.AdminUserDetailResp
 import kr.io.snuhbmilab.carediaryserverv2.admin.dto.response.AdminUserFindAllResponse
 import kr.io.snuhbmilab.carediaryserverv2.admin.dto.response.AdminUserScaleFindAllResponse
 import kr.io.snuhbmilab.carediaryserverv2.admin.dto.response.AdminUserScaleQuestionResultResponse
+import kr.io.snuhbmilab.carediaryserverv2.admin.dto.response.AdminUserWordCloudResponse
 import kr.io.snuhbmilab.carediaryserverv2.admin.facade.AdminUserFacade
 import kr.io.snuhbmilab.carediaryserverv2.common.annotation.UserId
 import kr.io.snuhbmilab.carediaryserverv2.common.dto.CommonResponse
@@ -37,5 +38,10 @@ class AdminUserController(
     @GetMapping("/{userId}/scale-questions")
     override fun findScaleQuestionResult(@PathVariable userId: UUID, @RequestParam count: Int): CommonResponse<AdminUserScaleQuestionResultResponse> {
         return CommonResponse.ok(adminUserFacade.findScaleQuestionResult(userId, count))
+    }
+
+    @GetMapping("/{userId}/wordcloud")
+    override fun findUserWordCloud(@PathVariable userId: UUID): CommonResponse<AdminUserWordCloudResponse> {
+        return CommonResponse.ok(adminUserFacade.findUserWordCloud(userId))
     }
 }

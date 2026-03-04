@@ -12,6 +12,7 @@ import kr.io.snuhbmilab.carediaryserverv2.admin.dto.response.AdminUserDetailResp
 import kr.io.snuhbmilab.carediaryserverv2.admin.dto.response.AdminUserFindAllResponse
 import kr.io.snuhbmilab.carediaryserverv2.admin.dto.response.AdminUserScaleFindAllResponse
 import kr.io.snuhbmilab.carediaryserverv2.admin.dto.response.AdminUserScaleQuestionResultResponse
+import kr.io.snuhbmilab.carediaryserverv2.admin.dto.response.AdminUserWordCloudResponse
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestParam
 import java.util.UUID
@@ -86,4 +87,21 @@ interface AdminUserApi {
         @Parameter(description = "조회할 회차", required = true, example = "1")
         @RequestParam count: Int
     ): CommonResponse<AdminUserScaleQuestionResultResponse>
+
+    @Operation(
+        summary = "사용자 워드클라우드 조회",
+        description = "특정 사용자의 일기에서 추출한 워드클라우드 데이터를 조회합니다."
+    )
+    @ApiResponses(
+        value = [
+            ApiResponse(responseCode = "200", description = "워드클라우드 조회 성공"),
+            ApiResponse(responseCode = "401", description = "인증 실패"),
+            ApiResponse(responseCode = "403", description = "권한 없음"),
+            ApiResponse(responseCode = "404", description = "사용자를 찾을 수 없음")
+        ]
+    )
+    fun findUserWordCloud(
+        @Parameter(description = "사용자 ID", required = true)
+        @PathVariable userId: UUID
+    ): CommonResponse<AdminUserWordCloudResponse>
 }
