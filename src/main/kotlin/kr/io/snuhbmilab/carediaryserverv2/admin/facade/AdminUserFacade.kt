@@ -4,11 +4,14 @@ import kr.io.snuhbmilab.carediaryserverv2.admin.dto.response.AdminUserDetailResp
 import kr.io.snuhbmilab.carediaryserverv2.admin.dto.response.AdminUserFindAllResponse
 import kr.io.snuhbmilab.carediaryserverv2.admin.dto.response.AdminUserScaleFindAllResponse
 import kr.io.snuhbmilab.carediaryserverv2.admin.dto.response.AdminUserScaleQuestionResultResponse
+import kr.io.snuhbmilab.carediaryserverv2.admin.dto.response.AdminUserWordCloudResponse
 import kr.io.snuhbmilab.carediaryserverv2.domain.diary.service.DiaryService
 import kr.io.snuhbmilab.carediaryserverv2.domain.scalequestion.service.ScaleQuestionService
 import kr.io.snuhbmilab.carediaryserverv2.domain.scalequestion.service.UserScaleService
 import kr.io.snuhbmilab.carediaryserverv2.domain.user.service.UserRiskService
 import kr.io.snuhbmilab.carediaryserverv2.domain.user.service.UserService
+import kr.io.snuhbmilab.carediaryserverv2.external.model.ModelClient
+import kr.io.snuhbmilab.carediaryserverv2.external.model.dto.GenerateWordCloudRequest
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.Year
@@ -23,6 +26,7 @@ class AdminUserFacade(
     private val userScaleService: UserScaleService,
     private val scaleQuestionService: ScaleQuestionService,
     private val userRiskService: UserRiskService,
+    private val modelClient: ModelClient,
 ) {
     fun findUserById(userId: UUID): AdminUserDetailResponse {
         val user = userService.findById(userId)
@@ -63,5 +67,16 @@ class AdminUserFacade(
         }
 
         return AdminUserFindAllResponse.from(userEvaluations)
+    }
+
+    fun findUserWordCloud(userId: UUID): AdminUserWordCloudResponse {
+        val request = GenerateWordCloudRequest(
+            userId = userId,
+            topK = 20,
+            maxDiaries = null
+        )
+        val response = modelClient.generateWordCloud(request).body!!
+
+        return AdminUserWordCloudResponse.from(response)
     }
 }
