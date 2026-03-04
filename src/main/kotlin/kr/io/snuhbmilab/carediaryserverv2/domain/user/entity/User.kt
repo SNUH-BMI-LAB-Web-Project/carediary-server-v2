@@ -62,7 +62,7 @@ class User(
     var firstDiaryDate: LocalDate? = null,
 
     @Column(name = "manager_id")
-    var managerId: Long? = null,
+    var managerId: UUID? = null,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "manager_id", insertable = false, updatable = false)
@@ -77,7 +77,7 @@ class User(
         birthDate: LocalDate,
         address: String,
         primaryDiagnosis: String?,
-        managerId: Long? = null
+        managerId: UUID? = null
     ) {
         this.name = name
         this.role = role
