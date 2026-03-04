@@ -109,3 +109,7 @@ aws:
     model-input-queue-url: ${AWS_SQS_MODEL_INPUT_QUEUE_URL}
     model-output-queue-url: ${AWS_SQS_MODEL_OUTPUT_QUEUE_URL}
     region: ${AWS_REGION:ap-northeast-2}
+
+verification-code:
+  admin: ${VERIFICATION_CODE_ADMIN}
+  care-manager: ${VERIFICATION_CODE_CARE_MANAGER}

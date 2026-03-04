@@ -90,7 +90,7 @@ class User(
 
     fun isRegistered(): Boolean = name != null
 
-    fun isAdmin(): Boolean = role == Role.ADMIN
+    fun isAdminOrManager(): Boolean = role == Role.ADMIN || role == Role.CARE_MANAGER
 
     fun addScaleQuestionTermCount() {
         scaleQuestionTermCount++

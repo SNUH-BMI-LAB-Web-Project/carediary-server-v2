@@ -5,6 +5,7 @@ import kr.io.snuhbmilab.carediaryserverv2.admin.dto.response.AdminUserFindAllRes
 import kr.io.snuhbmilab.carediaryserverv2.admin.dto.response.AdminUserScaleFindAllResponse
 import kr.io.snuhbmilab.carediaryserverv2.admin.dto.response.AdminUserScaleQuestionResultResponse
 import kr.io.snuhbmilab.carediaryserverv2.admin.facade.AdminUserFacade
+import kr.io.snuhbmilab.carediaryserverv2.common.annotation.UserId
 import kr.io.snuhbmilab.carediaryserverv2.common.dto.CommonResponse
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -19,8 +20,8 @@ class AdminUserController(
     private val adminUserFacade: AdminUserFacade
 ) : AdminUserApi {
     @GetMapping
-    override fun findAllUsers(): CommonResponse<AdminUserFindAllResponse> {
-        return CommonResponse.ok(adminUserFacade.findAllUsers())
+    override fun findAllUsers(@UserId userId: UUID): CommonResponse<AdminUserFindAllResponse> {
+        return CommonResponse.ok(adminUserFacade.findAllUsers(userId))
     }
 
     @GetMapping("/{userId}")

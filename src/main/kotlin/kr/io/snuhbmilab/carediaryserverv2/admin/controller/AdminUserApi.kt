@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
+import kr.io.snuhbmilab.carediaryserverv2.common.annotation.UserId
 import kr.io.snuhbmilab.carediaryserverv2.common.dto.CommonResponse
 import kr.io.snuhbmilab.carediaryserverv2.admin.dto.response.AdminUserDetailResponse
 import kr.io.snuhbmilab.carediaryserverv2.admin.dto.response.AdminUserFindAllResponse
@@ -30,7 +31,7 @@ interface AdminUserApi {
             ApiResponse(responseCode = "403", description = "권한 없음")
         ]
     )
-    fun findAllUsers(): CommonResponse<AdminUserFindAllResponse>
+    fun findAllUsers(@UserId userId: UUID): CommonResponse<AdminUserFindAllResponse>
 
     @Operation(
         summary = "사용자 상세 조회",

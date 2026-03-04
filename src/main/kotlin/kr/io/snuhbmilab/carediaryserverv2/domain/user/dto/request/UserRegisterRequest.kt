@@ -73,5 +73,9 @@ data class UserRegisterRequest(
     @Schema(description = "[환자 정보] 사회복지서비스 (다중 선택)", example = "[\"CAREGIVER_COST\", \"SPECIAL_DIET_PURCHASE\"]")
     val socialWelfareServiceLabels: List<String>?,
 
+    @Schema(description = "담당 관리자 ID", example = "550e8400-e29b-41d4-a716-446655440000")
     val managerId: Long?,
+
+    @Schema(description = "총괄 관리자 인증 코드", example = "ABCD1234")
+    val adminCode: String?,
 )
