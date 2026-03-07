@@ -57,6 +57,10 @@ class UserService(
         if (search.isNullOrBlank()) findAllRegistered()
         else userRepository.searchByName(search)
 
+    fun searchCareManagers(search: String?): List<User> =
+        if (search.isNullOrBlank()) findAllByRole(Role.CARE_MANAGER)
+        else userRepository.searchByNameAndRole(search, Role.CARE_MANAGER)
+
     fun validateExists(userId: UUID) {
         findById(userId)
     }

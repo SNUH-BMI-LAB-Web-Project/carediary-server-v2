@@ -4,6 +4,7 @@ import kr.io.snuhbmilab.carediaryserverv2.common.SuccessMessage
 import kr.io.snuhbmilab.carediaryserverv2.common.annotation.UserId
 import kr.io.snuhbmilab.carediaryserverv2.common.dto.CommonResponse
 import kr.io.snuhbmilab.carediaryserverv2.domain.user.dto.request.UserRegisterRequest
+import kr.io.snuhbmilab.carediaryserverv2.domain.user.dto.response.CareManagerResponse
 import kr.io.snuhbmilab.carediaryserverv2.domain.user.dto.response.CurrentUserResponse
 import kr.io.snuhbmilab.carediaryserverv2.domain.user.dto.response.UserRegisterResponse
 import kr.io.snuhbmilab.carediaryserverv2.domain.user.facade.UserFacade
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
 
@@ -28,5 +30,10 @@ class UserController(
     @GetMapping("/me")
     override fun getMe(@UserId userId: UUID): CommonResponse<CurrentUserResponse> {
         return CommonResponse.ok(userFacade.getMe(userId))
+    }
+
+    @GetMapping("/care-managers")
+    override fun searchCareManagers(@RequestParam(required = false) search: String?): CommonResponse<List<CareManagerResponse>> {
+        return CommonResponse.ok(userFacade.searchCareManagers(search))
     }
 }

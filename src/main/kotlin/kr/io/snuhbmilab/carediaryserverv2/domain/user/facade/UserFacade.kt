@@ -5,6 +5,7 @@ import kr.io.snuhbmilab.carediaryserverv2.common.constants.Role
 import kr.io.snuhbmilab.carediaryserverv2.common.exception.BusinessException
 import kr.io.snuhbmilab.carediaryserverv2.common.properties.VerificationCodeProperties
 import kr.io.snuhbmilab.carediaryserverv2.domain.user.dto.request.UserRegisterRequest
+import kr.io.snuhbmilab.carediaryserverv2.domain.user.dto.response.CareManagerResponse
 import kr.io.snuhbmilab.carediaryserverv2.domain.user.dto.response.CurrentUserResponse
 import kr.io.snuhbmilab.carediaryserverv2.domain.user.dto.response.UserRegisterResponse
 import kr.io.snuhbmilab.carediaryserverv2.domain.user.exception.UserErrorCode
@@ -76,6 +77,9 @@ class UserFacade(
             throw BusinessException(UserErrorCode.INVALID_VERIFICATION_CODE)
         }
     }
+
+    fun searchCareManagers(search: String?): List<CareManagerResponse> =
+        userService.searchCareManagers(search).map { CareManagerResponse.from(it) }
 
     fun getMe(userId: UUID): CurrentUserResponse {
         val user = userService.findById(userId)
