@@ -78,11 +78,15 @@ data class CurrentUserResponse(
     val disabilitySeverity: UserInformation.DisabilitySeverity?,
 
     @Schema(description = "[환자 정보] 사회복지서비스 (다중 선택)", example = "[\"CAREGIVER_COST\", \"SPECIAL_DIET_PURCHASE\"]")
-    val socialWelfareServiceLabels: List<String>?
+    val socialWelfareServiceLabels: List<String>?,
+
+    @Schema(description = "담당 관리자 정보")
+    val careManager: CareManagerResponse?,
 ) {
     companion object {
         @JvmStatic
         fun of(user: User, userInformation: UserInformation?): CurrentUserResponse {
+            val manager = user.manager
             return CurrentUserResponse(
                 userId = user.id!!,
                 email = user.email,
@@ -106,7 +110,8 @@ data class CurrentUserResponse(
                 disabilityStatus = userInformation?.disabilityStatus,
                 disabilityType = userInformation?.disabilityType,
                 disabilitySeverity = userInformation?.disabilitySeverity,
-                socialWelfareServiceLabels = userInformation?.socialWelfareServiceLabels?.parseListFromDBText()
+                socialWelfareServiceLabels = userInformation?.socialWelfareServiceLabels?.parseListFromDBText(),
+                careManager = manager?.let { CareManagerResponse.from(it) },
             )
         }
     }

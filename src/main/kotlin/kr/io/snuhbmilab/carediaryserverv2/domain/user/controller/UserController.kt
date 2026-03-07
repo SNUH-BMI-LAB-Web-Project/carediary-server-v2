@@ -4,7 +4,7 @@ import kr.io.snuhbmilab.carediaryserverv2.common.SuccessMessage
 import kr.io.snuhbmilab.carediaryserverv2.common.annotation.UserId
 import kr.io.snuhbmilab.carediaryserverv2.common.dto.CommonResponse
 import kr.io.snuhbmilab.carediaryserverv2.domain.user.dto.request.UserRegisterRequest
-import kr.io.snuhbmilab.carediaryserverv2.domain.user.dto.response.CareManagerResponse
+import kr.io.snuhbmilab.carediaryserverv2.domain.user.dto.response.CareManagerFindAllResponse
 import kr.io.snuhbmilab.carediaryserverv2.domain.user.dto.response.CurrentUserResponse
 import kr.io.snuhbmilab.carediaryserverv2.domain.user.dto.response.UserRegisterResponse
 import kr.io.snuhbmilab.carediaryserverv2.domain.user.facade.UserFacade
@@ -33,7 +33,7 @@ class UserController(
     }
 
     @GetMapping("/care-managers")
-    override fun searchCareManagers(@RequestParam(required = false) search: String?): CommonResponse<List<CareManagerResponse>> {
+    override fun searchCareManagers(@RequestParam(required = false) search: String?): CommonResponse<CareManagerFindAllResponse> {
         return CommonResponse.ok(userFacade.searchCareManagers(search))
     }
 }

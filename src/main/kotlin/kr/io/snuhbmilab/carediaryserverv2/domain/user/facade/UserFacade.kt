@@ -5,6 +5,7 @@ import kr.io.snuhbmilab.carediaryserverv2.common.constants.Role
 import kr.io.snuhbmilab.carediaryserverv2.common.exception.BusinessException
 import kr.io.snuhbmilab.carediaryserverv2.common.properties.VerificationCodeProperties
 import kr.io.snuhbmilab.carediaryserverv2.domain.user.dto.request.UserRegisterRequest
+import kr.io.snuhbmilab.carediaryserverv2.domain.user.dto.response.CareManagerFindAllResponse
 import kr.io.snuhbmilab.carediaryserverv2.domain.user.dto.response.CareManagerResponse
 import kr.io.snuhbmilab.carediaryserverv2.domain.user.dto.response.CurrentUserResponse
 import kr.io.snuhbmilab.carediaryserverv2.domain.user.dto.response.UserRegisterResponse
@@ -78,8 +79,8 @@ class UserFacade(
         }
     }
 
-    fun searchCareManagers(search: String?): List<CareManagerResponse> =
-        userService.searchCareManagers(search).map { CareManagerResponse.from(it) }
+    fun searchCareManagers(search: String?): CareManagerFindAllResponse =
+        CareManagerFindAllResponse(userService.searchCareManagers(search).map { CareManagerResponse.from(it) })
 
     fun getMe(userId: UUID): CurrentUserResponse {
         val user = userService.findById(userId)

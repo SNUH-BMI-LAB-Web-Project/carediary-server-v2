@@ -9,7 +9,7 @@ import io.swagger.v3.oas.annotations.tags.Tag
 import kr.io.snuhbmilab.carediaryserverv2.common.annotation.UserId
 import kr.io.snuhbmilab.carediaryserverv2.common.dto.CommonResponse
 import kr.io.snuhbmilab.carediaryserverv2.domain.user.dto.request.UserRegisterRequest
-import kr.io.snuhbmilab.carediaryserverv2.domain.user.dto.response.CareManagerResponse
+import kr.io.snuhbmilab.carediaryserverv2.domain.user.dto.response.CareManagerFindAllResponse
 import kr.io.snuhbmilab.carediaryserverv2.domain.user.dto.response.CurrentUserResponse
 import kr.io.snuhbmilab.carediaryserverv2.domain.user.dto.response.UserRegisterResponse
 import org.springframework.web.bind.annotation.RequestBody
@@ -64,5 +64,5 @@ interface UserApi {
     )
     fun searchCareManagers(
         @RequestParam(required = false) search: String?
-    ): CommonResponse<List<CareManagerResponse>>
+    ): CommonResponse<CareManagerFindAllResponse>
 }
