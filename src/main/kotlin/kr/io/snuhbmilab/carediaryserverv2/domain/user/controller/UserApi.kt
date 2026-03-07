@@ -9,9 +9,11 @@ import io.swagger.v3.oas.annotations.tags.Tag
 import kr.io.snuhbmilab.carediaryserverv2.common.annotation.UserId
 import kr.io.snuhbmilab.carediaryserverv2.common.dto.CommonResponse
 import kr.io.snuhbmilab.carediaryserverv2.domain.user.dto.request.UserRegisterRequest
+import kr.io.snuhbmilab.carediaryserverv2.domain.user.dto.response.CareManagerFindAllResponse
 import kr.io.snuhbmilab.carediaryserverv2.domain.user.dto.response.CurrentUserResponse
 import kr.io.snuhbmilab.carediaryserverv2.domain.user.dto.response.UserRegisterResponse
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestParam
 import java.util.UUID
 
 @Tag(name = "User", description = "사용자 관련 API")
@@ -49,4 +51,18 @@ interface UserApi {
     fun getMe(
         @Parameter(hidden = true) @UserId userId: UUID
     ): CommonResponse<CurrentUserResponse>
+
+    @Operation(
+        summary = "담당 관리자 목록 조회",
+        description = "Role이 CARE_MANAGER인 사용자를 이름으로 검색합니다. search가 비어있으면 전체 목록을 반환합니다."
+    )
+    @ApiResponses(
+        value = [
+            ApiResponse(responseCode = "200", description = "담당 관리자 목록 조회 성공"),
+            ApiResponse(responseCode = "401", description = "인증 실패")
+        ]
+    )
+    fun searchCareManagers(
+        @RequestParam(required = false) search: String?
+    ): CommonResponse<CareManagerFindAllResponse>
 }
