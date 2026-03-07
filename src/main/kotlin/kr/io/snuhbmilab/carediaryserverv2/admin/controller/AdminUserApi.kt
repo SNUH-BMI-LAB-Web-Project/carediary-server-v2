@@ -32,7 +32,7 @@ interface AdminUserApi {
             ApiResponse(responseCode = "403", description = "권한 없음")
         ]
     )
-    fun findAllUsers(@UserId userId: UUID): CommonResponse<AdminUserFindAllResponse>
+    fun findAllUsers(@Parameter(hidden = true) @UserId userId: UUID): CommonResponse<AdminUserFindAllResponse>
 
     @Operation(
         summary = "사용자 상세 조회",
